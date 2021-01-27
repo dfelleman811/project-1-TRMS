@@ -1,5 +1,41 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRMS</title>
+</head>
 <body>
-<h2>Project 1 TRMS Index.html</h2>
+    <h1 id='heading'>TRMS Test HTML</h1>
+    <label for='testInput'>Test Input:</label>
+    <input id='testInput' type='submit' onclick='testClick()'>
 </body>
+<script>
+    function testClick() {
+        // Testing to see if we can send a request by clicking the button and get a response
+    
+        // Create request object
+        let xhttp = new XMLHttpRequest();
+    
+        // set up URL
+        let url = "http://localhost:8080/Project-1-TRMS/MainServlet";
+    
+        // Open request
+        xhttp.open("GET", url);
+    
+        // Send request
+        xhttp.send();
+    
+        // manage request
+        xhttp.onreadystatechange = function() {
+    
+            if (this.readyState == 4 && this.status == 200) {
+                console.log('Successful response');
+            }
+        }
+    
+    
+    
+    }
+</script>
 </html>

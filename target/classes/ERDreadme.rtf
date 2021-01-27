@@ -1,0 +1,48 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2577
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Good morning, Ryan, \
+\
+I\'92ve dove into planning out the structure of my database for Project 1. I\'92m sharing with you my ERD for the TRMS - the exact names/datatypes for each columns is still in a \'91working\'92 state, but this is how I\'92m envisioning setting up the background logic of how entities will interact.\
+\
+Please let me know if there are any glaring errors or oversights as I am grateful for any and all feedback. A little explanation behind my reasoning is below if it helps. \
+\
+Hope you enjoy your weekend, and thank you! \
+\
+
+\f1\b Requests
+\f0\b0  - a table that will store individual requests for reimbursement. It references the Employee table, in order to have all basic info on that employee, perhaps most importantly their department and Available Reimbursement.\
+\
+
+\f1\b Development
+\f0\b0  
+\f1\b Resources
+\f0\b0  - this is the term I landed on for describing the type of \'91event\'92 that the employee is hoping to attend and be reimbursed for. I wanted to separate this out for two reasons: (1.) to de-clutter the Requests table, but also (2.) to have a separate table from which to pull reports on common resources so the company can identify if there\'92s any common threads that can be addressed in-house. Not at all sure how to use BLOB or if that\'92s even a viable option here\'85.I\'92m thinking to use that as a way to store additional information (images, pdfs, email approvals).\
+\
+
+\f1\b References
+\f0\b0  - I created this as a way to keep company standards on what qualifies as a \'91passing\'92 grade in order to be reimbursed. For reference only, it will include descriptions that lay out presentation requirements or details for approval as it applies to each grading format/case.\
+\
+
+\f1\b Employees
+\f0\b0  - a table of all employees at the company (who are eligible for tuition reimbursement).\
+\
+
+\f1\b Employee Accounts 
+\f0\b0 - a table of the user accounts for users to access the TRMS.\
+\
+
+\f1\b Employee Hierarchy
+\f0\b0  - After some research into SQL Hierarchies, I decided to create an employee hierarchy table, where each employee record will have a column with the Employee ID of their direct supervisor (Heads/Managers that do not have direct superiors will have a NULL value). It\'92s just a first pass\'85does this seem too recursive? \
+\
+
+\f1\b Archived Requests 
+\f0\b0  - a table to store requests that have been closed and paid out. \
+\
+\
+\
+}
