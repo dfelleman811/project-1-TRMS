@@ -1,45 +1,79 @@
 
+select * from employees;
+
+create table employees (
+    employee_id number(10) PRIMARY KEY,
+    first_name varchar2(15) NOT NULL,
+    last_name varchar2(15) NOT NULL,
+    email varchar2(15) UNIQUE, -- for automated notifications that someone has asked for more information?
+    password varchar2(20) NOT NULL,
+    department_id number(10) NOT NULL, -- **** FOREIGN KEY TO DEPT_ID ****
+    supervisor_id number(10) NOT NULL, -- **** FOREIGN KEY TO EMPI_ID ****
+    available_reimbursement number(10) NOT NULL
+);
+
+alter table employees modify email number(30);
+
+alter table employees
+add constraint fk_emp_empsuper
+foreign key (supervisor_id) references employees(employee_id);
+
+alter table employees
+add constraint fk_emp_dept
+foreign key (department_id) references departments(department_id);
+
+create sequence emp_id_seq
+start with 1
+increment by 1;
+
+
+create or replace procedure add_employee(first_name varchar2, last_name varchar2, email varchar2, password varchar2, department_id number, supervisor_id number, available_reimbursement number)
+is
+begin
+    insert into employees values (emp_id_seq.nextval, first_name, last_name, email, password, department_id, supervisor_id, available_reimbursement);
+end;
+
+insert into departments values (1, 'sales', 1);
+
+call add_employee ('basic', 'employee', 'employee@example.com', 'password', 1, 1, 1000);
+
+
 
 -- Create the request table -- will figure out late, but what is too much info to put in one table?
 -- i.e. should the request simply have id, date, and employee? And then info on the event will be in another table?
 -- I think so...that way we can query that table to see what's popular and maybe offer for free/part of training...
 create table requests (
     request_id number(10) PRIMARY KEY,
-    submit_date timestamp with time zone, -- when request was submitted by employee
-    urgent number(1), -- 1=yes, 0=no
-    status varchar2(10) constraint r_status check (status in ('received', 'open', 'approved', 'pending', 'closed')),
-    employee_id number(10), -- ****FOREIGNK KEY TO EMP TABLE****
-    development_resource number(10) -- ****FOREIGN KEY TO DR TABLE****
+    submit_date timestamp with time zone NOT NULL, -- when request was submitted by employee
+    urgent number(1) NOT NULL, -- 1=yes, 0=no
+    status varchar2(10) constraint r_status check (status in ('received', 'open', 'additional info requested','approved', 'pending', 'closed')) NOT NULL,
+    employee_id number(10) NOT NULL, -- ****FOREIGNK KEY TO EMP TABLE****
+    development_resource number(10) NOT NULL -- ****FOREIGN KEY TO DR TABLE****
     -- attachments? or can this just link to the dr table?
 );
+
 
 alter table requests
 add constraint fk_req_emp
 foreign key (employee_id) references employees(employee_id);
 
+
+
 alter table requests
 add constraint fk_req_devres
 foreign key (development_resource) references development_resources(resource_id);
 
-create table employees (
-    employee_id number(10) PRIMARY KEY,
-    first_name varchar2(15),
-    last_name varchar2(15),
-    email varchar2(15) UNIQUE, -- for automated notifications that someone has asked for more information?
-    password varchar2(20),
-    department_id number(10), -- relations = client relations
-    supervisor_id number(10), -- **** FOREIGN KEY TO EMPI_ID ****
-    available_reimbursement number(10)
-);
 
 -- table for departments
 create table departments (
     department_id number(10) PRIMARY KEY, 
-    department_name varchar2(20) constraint d_names check (department in ('sales', 'research', 'design', 'marketing', 'relations')),
-    department_head number(10) -- **** FOREIGN KEY TO EMP TABLE ****
+    department_name varchar2(20) constraint d_names check (department_name in ('sales', 'research', 'design', 'marketing', 'relations')) NOT NULL,
+    department_head number(10) NOT NULL -- **** FOREIGN KEY TO EMP TABLE ****
 );
 
-
+alter table departments
+add constraint fk_dept_emp
+foreign key (department_head) references employees(employee_id);
 
 -- create a table for archived requests (closed requests that have been reimbursed and will no longer need to be referenced except for reporting)
 create table archived_requests (
@@ -66,11 +100,12 @@ create table development_resources (
     attachments blob -- think I need to link this to another table?
 );
 
-alter table development_resources modify grading_format number(10);
 
 alter table development_resources
 add constraint fk_devres_gradeform
 foreign key (grading_format_id) references grading_references(format_id);
+
+drop table development_resources;
 
 
 -- Will need a table (maybe?) for company relations- i.e. who reports to who...something like FTS but for people?
@@ -105,6 +140,9 @@ alter table emp_hier
 add constraint fk_emphier_emps
 foreign key (employee_id) references employees(employee_id);
 */
+
+alter table emp_hier drop constraint fk_emphier_emps;
+drop table emp_hier;
 -- grading format reference table
 
 create table grading_references (
