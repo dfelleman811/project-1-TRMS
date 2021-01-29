@@ -1,5 +1,5 @@
 
-
+select * from employees;
 
 create table employees (
     employee_id number(10) PRIMARY KEY,
@@ -12,13 +12,63 @@ create table employees (
     available_reimbursement number(10) NOT NULL
 );
 
+
+insert into employees values (emp_id_seq.nextval, 'BenCo', 'BenefitsCoordinator', 'benco@example.com', 'admin', 0, 0, 1000);
+
+alter table employees modify last_name varchar2(25);
+
+update employees set email = 'sales.depthead@example.com' where employee_id = 13;
+
 alter table employees
 add constraint fk_emp_empsuper
 foreign key (supervisor_id) references employees(employee_id);
 
+alter table employees drop constraint fk_emp_empsuper;
+
 alter table employees
 add constraint fk_emp_dept
 foreign key (department_id) references departments(department_id);
+
+alter table employees drop constraint fk_emp_dept;
+
+
+create sequence emp_id_seq
+start with 1
+increment by 1;
+
+
+create or replace procedure add_employee(f_name varchar2, l_name varchar2, mail varchar2, pword varchar2, dept_id number, avail_reimbursement number) 
+is
+    sup_id number;
+begin
+    select department_head into supervisor_id from departments where department_id=department_id;
+    insert into employees values (emp_id_seq.nextval, f_name, l_name, mail, pword, dept_id, sup_id, avail_reimbursement);
+end;
+
+create or replace procedure get_sup_id(department_id number)
+is
+    supervisor_id number;
+begin
+    select department_head into supervisor_id from departments where department_id=department_id;
+end;
+
+call add_employee('Sales', 'DepartmentHead', 'salesdepthead@example.com', 'saleshead', 1, 12, 1000);
+call add_employee('Research', 'DepartmentHead', 'research.depthead@example.com', 'saleshead', 1, 12, 1000);
+call add_employee('Design', 'DepartmentHead', 'design.depthead@example.com', 'saleshead', 1, 12, 1000);
+call add_employee('Marketing', 'DepartmentHead', 'marketing.depthead@example.com', 'saleshead', 1, 12, 1000);
+call add_employee('Relations', 'DepartmentHead', 'relations.depthead@example.com', 'saleshead', 1, 12, 1000);
+
+call add_employee('Basic', 'TestEmployee', 'basic.employee@example.com', 'password', 1, 13, 1000);
+
+update employees set department_id = 2 where employee_id=14;
+update employees set department_id = 3 where employee_id=15;
+update employees set department_id = 4 where employee_id=16;
+update employees set department_id = 5 where employee_id=17;
+
+update employees set password = 'researchhead' where employee_id=14;
+update employees set password = 'designhead' where employee_id=15;
+update employees set password = 'marketinghead' where employee_id=16;
+update employees set password = 'relationshead' where employee_id=17;
 
 
 -- Create the request table -- will figure out late, but what is too much info to put in one table?
@@ -53,6 +103,28 @@ create table departments (
     department_head number(10) NOT NULL -- **** FOREIGN KEY TO EMP TABLE ****
 );
 
+alter table departments drop constraint d_names;
+alter table departments add constraint d_names check (department_name in ('sales', 'research', 'design', 'marketing', 'relations', 'benco'));
+
+alter table departments
+add constraint fk_dept_emp
+foreign key (department_head) references employees(employee_id);
+
+
+select * from departments;
+select* from employees;
+
+insert into departments values (1, 'sales', 13);
+insert into departments values (2, 'research', 14);
+insert into departments values (3, 'design', 15);
+insert into departments values (4, 'marketing', 16);
+insert into departments values (5, 'relations', 17);
+insert into departments values(0, 'benco', 12);
+
+update departments set department_name = 'research' where department_id = 2;
+update departments set department_name = 'design' where department_id = 3;
+update departments set department_name = 'marketing' where department_id = 4;
+update departments set department_name = 'relations' where department_id = 5;
 
 
 -- create a table for archived requests (closed requests that have been reimbursed and will no longer need to be referenced except for reporting)

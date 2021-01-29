@@ -1,9 +1,11 @@
 package dev.felleman.repositories;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import dev.felleman.models.Employee;
@@ -13,6 +15,8 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	
 	public static Connection conn = JDBCConnection.getConnection();
 
+	
+	
 	@Override
 	public Employee getEmployee(int employeeId) {
 		
@@ -52,13 +56,46 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
 	@Override
 	public boolean addEmployee(Employee employee) {
-		// TODO Auto-generated method stub
+		
+		try {
+			
+			String sql = "call add_employee(?,?,?,?,?,?)";
+			
+			CallableStatement cs = conn.prepareCall(sql);
+			
+			cs.setString(1,employee.getFirstName());
+			cs.setString(2, employee.getLastName());
+			cs.setString(3, employee.getEmail());
+			cs.setString(4,  employee.getPassword());
+			cs.setString(5, Integer.toString(employee.getDepartmentId()));
+			cs.setString(6, Integer.toString(employee.getAvailableReimbursement()));
+			
+			boolean success = cs.execute();
+			
+			return success;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
 	@Override
 	public List<Employee> getAllEmployees() {
-		// TODO Auto-generated method stub
+		// Empty list to populate with reulst set
+		List<Employee> empList = new ArrayList<Employee>();
+		
+		try {
+			
+			String sql = "select * from employees";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
