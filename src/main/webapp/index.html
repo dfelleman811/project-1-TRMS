@@ -6,8 +6,40 @@
     <title>TRMS</title>
 </head>
 <body>
-    <h1 id='heading'>Index Page</h1>
+    <h1 id='heading'>Log In Page</h1>
 
+    <div id='logIn'>
+    <label for='emailInput'>Email: </label>
+    <input id='emailInput' type='email' placeholder='email@example.com'>
+    <br/>
+    <label for='passwordInput'>Password: </label>
+    <input id='passwordInput' type='text' placeholder='password'>
+    <br/>
+    <button id='loginButton' onclick='onLoginClick()'>Log In</button>
+    </div>
 </body>
+<script>
+
+    // Define function for log in button click
+    function onLoginClick() {
+
+        // collect input from fields
+
+        let emailInput = document.getElementById('emailInput').value;
+        let passwordInput = document.getElementById('passwordInput').value;
+
+        console.log(emailInput);
+        console.log(passwordInput);
+
+        // Get employee by email and make sure password matches
+        
+        // Create request object
+        let hxttp = new XMLHttpRequest();
+
+        // we'll use a put request to send sensitive information in request body not url
+        hxttp.open("PUT", "http://localhost:8080/") // need to define a new getMethod to get by email...
+
+    }
+</script>
 
 </html>

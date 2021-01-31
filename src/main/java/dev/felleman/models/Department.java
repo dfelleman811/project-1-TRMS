@@ -5,7 +5,7 @@ public class Department {
 	private int departmentId;
 	private String departmentName;
 	private int departmentHead; // references employee id
-	
+
 	public Department() {
 		super();
 	}
@@ -49,9 +49,31 @@ public class Department {
 
 	@Override
 	public String toString() {
-		return "Department [departmentId=" + this.departmentId + ", departmentName=" + this.departmentName + ", departmentHead="
-				+ this.departmentHead + "]";
+		return "Department [departmentId=" + this.departmentId + ", departmentName=" + this.departmentName
+				+ ", departmentHead=" + this.departmentHead + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Department other = (Department) obj;
+		if (departmentHead != other.departmentHead)
+			return false;
+		if (departmentId != other.departmentId)
+			return false;
+		if (departmentName == null) {
+			if (other.departmentName != null)
+				return false;
+		} else if (!departmentName.equals(other.departmentName))
+			return false;
+		return true;
 	}
 	
 	
+
 }

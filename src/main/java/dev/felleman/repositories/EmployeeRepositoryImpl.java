@@ -12,26 +12,59 @@ import dev.felleman.models.Employee;
 import dev.felleman.util.JDBCConnection;
 
 public class EmployeeRepositoryImpl implements EmployeeRepository {
-	
+
 	public static Connection conn = JDBCConnection.getConnection();
 
-	
-	
 	@Override
 	public Employee getEmployee(int employeeId) {
+
+		try {
+
+			String sql = "select * from employees where employee_id=?";
+
+			PreparedStatement ps = conn.prepareStatement(sql);
+
+			ps.setString(1, Integer.toString(employeeId));
+
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				Employee e = new Employee();
+
+				e.setEmployeeId(rs.getInt("employee_id"));
+				e.setFirstName(rs.getString("first_name"));
+				e.setLastName(rs.getString("last_name"));
+				e.setEmail(rs.getString("email"));
+				e.setPassword(rs.getString("password"));
+				e.setDepartmentId(rs.getInt("department_id"));
+				e.setSupervisorId(rs.getInt("supervisor_id"));
+				e.setAvailableReimbursement(rs.getInt("available_reimbursement"));
+
+				return e;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	@Override
+	public Employee getEmployee(String email) {
 		
 		try {
 			
-			String sql = "select * from employees where employee_id=?";
+			String sql = "select * from employees where email = ?";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			ps.setString(1, Integer.toString(employeeId));
+			ps.setString(1, email);
 			
 			ResultSet rs = ps.executeQuery();
 			
 			if (rs.next()) {
-				Employee e  = new Employee();
+				Employee e = new Employee();
 				
 				e.setEmployeeId(rs.getInt("employee_id"));
 				e.setFirstName(rs.getString("first_name"));
@@ -45,35 +78,33 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 				return e;
 			}
 			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		
 		return null;
 	}
 
+
 	@Override
 	public boolean addEmployee(Employee employee) {
-		
+
 		try {
-			
+
 			String sql = "call add_employee(?,?,?,?,?,?)";
-			
+
 			CallableStatement cs = conn.prepareCall(sql);
-			
-			cs.setString(1,employee.getFirstName());
+
+			cs.setString(1, employee.getFirstName());
 			cs.setString(2, employee.getLastName());
 			cs.setString(3, employee.getEmail());
-			cs.setString(4,  employee.getPassword());
+			cs.setString(4, employee.getPassword());
 			cs.setString(5, Integer.toString(employee.getDepartmentId()));
 			cs.setString(6, Integer.toString(employee.getAvailableReimbursement()));
-			
+
 			boolean success = cs.execute();
-			
+
 			return success;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -84,15 +115,31 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	public List<Employee> getAllEmployees() {
 		// Empty list to populate with reulst set
 		List<Employee> empList = new ArrayList<Employee>();
-		
+
 		try {
-			
-			String sql = "select * from employees";
-			
+
+			String sql = "select * from employees order by employee_id";
+
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
+			ResultSet rs = ps.executeQuery();
 			
-			
+			while (rs.next()) {
+				Employee e = new Employee();
+				
+				e.setEmployeeId(rs.getInt("employee_id"));
+				e.setFirstName(rs.getString("first_name"));
+				e.setLastName(rs.getString("last_name"));
+				e.setEmail(rs.getString("email"));
+				e.setPassword(rs.getString("password"));
+				e.setDepartmentId(rs.getInt("department_id"));
+				e.setSupervisorId(rs.getInt("supervisor_id"));
+				e.setAvailableReimbursement(rs.getInt("available_reimbursement"));
+				
+				empList.add(e);
+			}
+			return empList;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -101,14 +148,54 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
 	@Override
 	public boolean updateEmployee(Employee eChange) {
-		// TODO Auto-generated method stub
+		
+		try {
+			
+			String sql = "update employees set first_name = ?, last_name = ?, email = ?, password = ?, department_id = ?, supervisor_id = ?, available_reimbursement = ? where employee_id  = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, eChange.getFirstName());
+			ps.setString(2, eChange.getLastName());
+			ps.setString(3, eChange.getEmail());
+			ps.setString(4,  eChange.getPassword());
+			ps.setString(5, Integer.toString(eChange.getDepartmentId()));
+			ps.setString(6, Integer.toString(eChange.getSupervisorId()));
+			ps.setString(7, Integer.toString(eChange.getAvailableReimbursement()));
+			ps.setString(8, Integer.toString(eChange.getEmployeeId()));
+			
+			boolean success = ps.execute();
+			
+			return success;
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteEmployee(Employee employee) {
-		// TODO Auto-generated method stub
+		
+		try {
+			
+			String sql = "delete employees where employee_id = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, Integer.toString(employee.getEmployeeId()));
+			
+			boolean success = ps.execute();
+			
+			return success;
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
+	
 }

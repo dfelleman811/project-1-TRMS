@@ -1,5 +1,5 @@
 
-select * from employees;
+select * from employees order by employee_id;
 
 create table employees (
     employee_id number(10) PRIMARY KEY,
@@ -41,7 +41,7 @@ create or replace procedure add_employee(f_name varchar2, l_name varchar2, mail 
 is
     sup_id number;
 begin
-    select department_head into supervisor_id from departments where department_id=department_id;
+    select department_head into sup_id from departments where dept_id=department_id;
     insert into employees values (emp_id_seq.nextval, f_name, l_name, mail, pword, dept_id, sup_id, avail_reimbursement);
 end;
 
@@ -59,6 +59,9 @@ call add_employee('Marketing', 'DepartmentHead', 'marketing.depthead@example.com
 call add_employee('Relations', 'DepartmentHead', 'relations.depthead@example.com', 'saleshead', 1, 12, 1000);
 
 call add_employee('Basic', 'TestEmployee', 'basic.employee@example.com', 'password', 1, 13, 1000);
+call add_employee('test', 'tester', 'test@example.com', 'testing', 2, 1000);
+
+select * from employees;
 
 update employees set department_id = 2 where employee_id=14;
 update employees set department_id = 3 where employee_id=15;
@@ -84,7 +87,9 @@ create table requests (
     -- attachments? or can this just link to the dr table?
 );
 
+alter table requests add last_updated timestamp with time zone;
 
+select * from requests;
 alter table requests
 add constraint fk_req_emp
 foreign key (employee_id) references employees(employee_id);
@@ -104,7 +109,7 @@ create table departments (
 );
 
 alter table departments drop constraint d_names;
-alter table departments add constraint d_names check (department_name in ('sales', 'research', 'design', 'marketing', 'relations', 'benco'));
+alter table departments add constraint d_names check (department_name in ('sales', 'research', 'design', 'marketing', 'relations', 'benco', 'testAddDept'));
 
 alter table departments
 add constraint fk_dept_emp
@@ -113,6 +118,16 @@ foreign key (department_head) references employees(employee_id);
 
 select * from departments;
 select* from employees;
+
+delete from employees where employee_id=20;
+
+create or replace procedure add_department(dept_id number, dept_name varchar2, dept_head number)
+is 
+begin
+    insert into departments values (dept_id, dept_name, dept_head);
+end;
+
+call add_department(6, 'testAddDept', 18);
 
 insert into departments values (1, 'sales', 13);
 insert into departments values (2, 'research', 14);
@@ -152,12 +167,21 @@ create table development_resources (
     attachments blob -- think I need to link this to another table?
 );
 
+alter table development_resources modify start_date null;
+alter table development_resources modify resource_time null;
+alter table development_resources modify resource_location null;
+alter table development_resources modify resource_cost null;
+
 
 alter table development_resources
 add constraint fk_devres_gradeform
-foreign key (grading_format_id) references grading_references(format_id);
+foreign key (grading_format_id) references grading_references(grade_id);
 
-drop table development_resources;
+alter table development_resources drop constraint fk_devres_gradeform;
+
+select * from grading_references;
+
+select * from development_resources;
 
 
 -- Will need a table (maybe?) for company relations- i.e. who reports to who...something like FTS but for people?
@@ -198,11 +222,85 @@ drop table emp_hier;
 -- grading format reference table
 
 create table grading_references (
-    format_id number(10) PRIMARY KEY,
-    format_type varchar2(10) constraint grade_format_types check (format_type in ('pass/fail','graded', 'presentation')),
-    description varchar2(50)
+    grade_id number(10) PRIMARY KEY,
+    grade_type varchar2(20),
+    passing varchar2(1)
 );
 
+alter table grading_references modify grade_type varchar2(20);
+
+
+
+
+drop table grading_references;
+
+select * from grading_references;
+
+insert all
+    into grading_references (grade_id, grade_type, passing) values (1, 'A', 1)
+    into grading_references (grade_id, grade_type, passing) values (2, 'B', 1)
+    into grading_references (grade_id, grade_type, passing) values (3, 'C', 1)
+    into grading_references (grade_id, grade_type, passing) values (4, 'D', 0)
+    into grading_references (grade_id, grade_type, passing) values (5, 'F', 0)
+    into grading_references (grade_id, grade_type, passing) values (6, 'pass', 1)
+    into grading_references (grade_id, grade_type, passing) values (7, 'fail', 0)
+    into grading_references (grade_id, grade_type, passing) values (8, 'presentation_pass', 1)
+    into grading_references (grade_id, grade_type, passing) values (9, 'presentation_fail', 0)
+select 1 from dual;
+
+
+select * from requests;
+
+create sequence req_id_seq
+start with 1
+increment by 1;
+
+create sequence dev_res_id_seq
+start with 1
+increment by 1;
+
+create or replace procedure add_request(e_id number, urgency number) 
+is
+begin
+    insert into requests values(req_id_seq.nextval, current_date, urgency, 'open', e_id, dev_res_id_seq.nextval, current_date);
+end;
+
+select * from requests;
+alter table requests drop constraint fk_req_devres;
+/*
+create or replace trigger gen_devres_id
+before insert on requests
+for each row
+    declare 
+        dev_res_id number := dev_res_id_seq.nextval;
+begin
+    insert into development_resources values(dev_res_id, null, null, null, null, null, null, null, null, null); 
+end;
+*/
+
+drop trigger gen_devres_id;
+
+call add_request(18, 0);
+
+select * from requests;
+select * from development_resources;
+select * from departments;
+
+
+create or replace procedure add_dev_resource(starting date, time date, location varchar2, cost number, grade_format_id number, res_type varchar2, res_description varchar2, res_just varchar2) 
+is
+    res_id number := DEV_RES_ID_SEQ.currval;
+begin
+    
+    insert into development_resources values (res_id, starting, time, location, cost, grade_format_id, res_type, res_description, res_just, null);
+end;
+
+call add_dev_resource(current_date, current_date, 'NYU', 500, 1, 'course', 'management', 'improvement');
+
+select * from employees;
+update employees set supervisor_id = 14 where employee_id = 18;
+
+delete employees where employee_id = 23; -- will have to think about what data will be lost if employee is fired...will all other tables remain the same?
 
 
 

@@ -1,11 +1,11 @@
 package dev.felleman.models;
 
 public class GradingReferences {
-	
+
 	private int formatId;
 	private String formatType;
 	private String formatDescription;
-	
+
 	public GradingReferences() {
 		super();
 	}
@@ -49,12 +49,8 @@ public class GradingReferences {
 
 	@Override
 	public String toString() {
-		return "GradingReferences [formatId=" + this.formatId + ", formatType=" + this.formatType + ", formatDescription="
-				+ this.formatDescription + "]";
+		return "GradingReferences [formatId=" + this.formatId + ", formatType=" + this.formatType
+				+ ", formatDescription=" + this.formatDescription + "]";
 	}
-	
-	
-	
-	
 
 }

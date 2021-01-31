@@ -10,7 +10,7 @@ public class Employee {
 	private int departmentId;
 	private int supervisorId;
 	private int availableReimbursement;
-	
+
 	public Employee() {
 		super();
 	}
@@ -106,11 +106,53 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [employeeId=" + this.employeeId + ", firstName=" + this.firstName + ", lastName=" + this.lastName + ", email="
-				+ this.email + ", password=" + this.password + ", departmentId=" + this.departmentId + ", supervisorId=" + this.supervisorId
-				+ ", availableReimbursement=" + this.availableReimbursement + "]";
+		return "Employee [employeeId=" + this.employeeId + ", firstName=" + this.firstName + ", lastName="
+				+ this.lastName + ", email=" + this.email + ", password=" + this.password + ", departmentId="
+				+ this.departmentId + ", supervisorId=" + this.supervisorId + ", availableReimbursement="
+				+ this.availableReimbursement + "]";
 	}
-	
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Employee other = (Employee) obj;
+		if (availableReimbursement != other.availableReimbursement)
+			return false;
+		if (departmentId != other.departmentId)
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (employeeId != other.employeeId)
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (supervisorId != other.supervisorId)
+			return false;
+		return true;
+	}
+
 	
 	
 }
