@@ -31,13 +31,31 @@
         console.log(emailInput);
         console.log(passwordInput);
 
+        // Create json object to send in request body
+
+        let employee = {
+            email: emailInput,
+            password: passwordInput
+        };
+
         // Get employee by email and make sure password matches
-        
         // Create request object
-        let hxttp = new XMLHttpRequest();
+        let xhttp = new XMLHttpRequest();
 
         // we'll use a put request to send sensitive information in request body not url
-        hxttp.open("PUT", "http://localhost:8080/") // need to define a new getMethod to get by email...
+        xhttp.open("POST", "http://localhost:8080/Project-1-TRMS/getEmployee.do", true);
+
+        // Set request header
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+
+        xhttp.send(JSON.stringify(employee));
+
+        xhttp.onreadystatechange = function() {
+
+            if (this.readyState == 4 && this.status == 200) {
+                console.log("is this when I'd send them to another page?");
+            }
+        }
 
     }
 </script>

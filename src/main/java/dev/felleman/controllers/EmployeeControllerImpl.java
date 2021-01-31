@@ -45,13 +45,26 @@ public class EmployeeControllerImpl implements EmployeeController {
 	@Override
 	public void getEmployeeByEmail(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		String email = gson.fromJson(request.getReader(), Employee.class).getEmail();
-
+		//System.out.println(gson.fromJson(request.getReader(), Employee.class));
+		Employee emp = gson.fromJson(request.getReader(), Employee.class);
+		
+		String email = emp.getEmail();
+		String password = emp.getPassword();
+		
+		System.out.println(email);
+		System.out.println(password);
+		
 		Employee e = es.getEmployee(email);
 		
 		System.out.println(e);
+		
+		if (e.getPassword().equals(password)) {
+			response.sendRedirect("https://www.google.com");
+		}else {
+			response.getWriter().append("incorrect password");
+		}
 
-		response.getWriter().append((e != null) ? gson.toJson(e) : "{}");
+		
 
 	}
 

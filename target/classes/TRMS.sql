@@ -87,7 +87,34 @@ create table requests (
     -- attachments? or can this just link to the dr table?
 );
 
-alter table requests add last_updated timestamp with time zone;
+alter table requests modify last_updated set default current_timestamp;
+
+
+
+create or replace trigger on_req_update
+after insert or update of urgent, status 
+on requests
+for each row
+declare 
+    
+    req_id number;
+
+begin
+    select request_id into req_id from requests;
+    update requests set last_updated = current_timestamp where request_id = req_id;
+end;
+
+
+create or replace trigger on_req_update
+after insert or update of urgent, status 
+on requests
+for each row
+begin
+    select request_id into last_updated from requests;
+    update requests set last_updated = current_timestamp where request_id = req_id;
+end;
+
+
 
 select * from requests;
 alter table requests
@@ -166,6 +193,11 @@ create table development_resources (
     justification varchar2(20), -- ditto above
     attachments blob -- think I need to link this to another table?
 );
+
+select * from development_resources;
+
+alter table development_resources rename column pd_type to res_type;
+alter table development_resources rename column pd_description to res_description;
 
 alter table development_resources modify start_date null;
 alter table development_resources modify resource_time null;
@@ -280,9 +312,18 @@ end;
 
 drop trigger gen_devres_id;
 
-call add_request(18, 0);
+call add_request(18, 1);
 
-select * from requests;
+alter trigger on_req_update disable;
+
+select * from requests order by last_updated desc;
+
+
+
+update requests set status = 'closed' where request_id = 5;
+
+
+
 select * from development_resources;
 select * from departments;
 
@@ -303,4 +344,4 @@ update employees set supervisor_id = 14 where employee_id = 18;
 delete employees where employee_id = 23; -- will have to think about what data will be lost if employee is fired...will all other tables remain the same?
 
 
-
+delete employees where employee_id = 21 OR employee_id = 23;
