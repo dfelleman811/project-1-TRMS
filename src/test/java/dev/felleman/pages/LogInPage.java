@@ -12,13 +12,13 @@ public class LogInPage {
 
 	// Grab the elements we want to interact with
 
-	@FindBy(css = "input[id='emailInput']") // not tested yet! still need to build the page
+	@FindBy(css = "input[id='emailInput']") 
 	public WebElement emailInput;
 
 	@FindBy(css = "input[id='passwordInput']")
 	public WebElement passwordInput;
 
-	@FindBy(css = "button[id='logInButton']")
+	@FindBy(css = "button[id='loginButton']")
 	public WebElement loginButton;
 
 	// Constructor to initialize these elements in this class

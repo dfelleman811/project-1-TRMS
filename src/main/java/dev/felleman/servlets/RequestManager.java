@@ -1,9 +1,13 @@
 package dev.felleman.servlets;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dev.felleman.controllers.DeptController;
 import dev.felleman.controllers.DeptControllerImpl;
@@ -13,6 +17,7 @@ import dev.felleman.controllers.EmployeeController;
 import dev.felleman.controllers.EmployeeControllerImpl;
 import dev.felleman.controllers.RequestController;
 import dev.felleman.controllers.RequestControllerImpl;
+import dev.felleman.models.Employee;
 
 /**
  * This class is to manage incoming requests and reroute them to the proper
@@ -22,19 +27,24 @@ import dev.felleman.controllers.RequestControllerImpl;
  *
  */
 public class RequestManager {
+	
 
 	public EmployeeController ec = new EmployeeControllerImpl();
 	public RequestController rc = new RequestControllerImpl();
 	public DeptController dc = new DeptControllerImpl();
 	public DevResController drs = new DevResControllerImpl();
 	
-	public void process(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 		// Get the uri from the request
 		String uri = request.getRequestURI();
 
 		// confirm
 		System.out.println(uri);
+		
+		
+		
+		
 
 		// Send to appropriate controller
 		switch (uri) {
@@ -43,13 +53,31 @@ public class RequestManager {
 			response.getWriter().append("Test Worked!");
 			break;
 		}
+		
+		case "/Project-1-TRMS/html/home.html": {
+			System.out.println("home page now?");
+			break;
+		}
 
 		case "/Project-1-TRMS/getEmployee.do": {
 			System.out.println("get employee case");
+			
+			// check if params are empty or not - if empty look in request body for email
 			if (request.getParameter("employeeId") == null) {
-				ec.getEmployeeByEmail(request, response);
+				Employee e = ec.getEmployeeByEmail(request, response);
+				if (e != null) {
+					//open session
+					HttpSession session = request.getSession();
+					session.setAttribute("loggedInUser", e);
+					RequestDispatcher dis = request.getRequestDispatcher("/html/home.html");
+					dis.forward(request, response);
+				}else {
+					response.sendError(400, "Email parameter improperly formatted.");
+				}
+			// else use the id in param
 			} else {
-			ec.getEmployee(request, response);
+				String emp = ec.getEmployee(request, response);
+				response.getWriter().append(emp);
 			}
 			break;
 		}

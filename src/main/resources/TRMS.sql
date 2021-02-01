@@ -199,6 +199,25 @@ select * from development_resources;
 alter table development_resources rename column pd_type to res_type;
 alter table development_resources rename column pd_description to res_description;
 
+alter table development_resources drop column res_description;
+alter table development_resources add res_description varchar2(3000);
+
+alter table development_resources drop column justification;
+alter table development_resources add justification varchar2(3000);
+
+alter table development_resources add test_long_text varchar2(4000);
+alter table development_resources drop column test_long_text;
+
+update development_resources set test_long_text = ('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porttitor nisi arcu, eget eleifend orci lacinia eget. Mauris a dignissim velit, sit amet mattis ante. Praesent tempor mattis est. Sed convallis eu diam quis dapibus. Integer sollicitudin viverra ante. Vestibulum nunc libero, tempus eget fringilla ac, ullamcorper vel est. Nunc non euismod enim. Integer commodo nisl a mauris suscipit maximus. In in ultricies enim. Ut accumsan aliquet nibh, nec dapibus purus viverra non.
+
+Proin ut urna elit. Nullam consequat velit vitae massa pretium feugiat. Suspendisse gravida urna eget imperdiet pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis commodo tortor mauris, consectetur suscipit ex convallis ut. Praesent commodo eleifend ipsum et tempus. Pellentesque sapien elit, finibus non pellentesque sit amet, facilisis id sapien. Etiam vestibulum, enim quis pretium facilisis, sapien justo placerat quam, ac imperdiet nunc lorem vel risus. Nam imperdiet, leo sit amet dignissim condimentum, purus magna rutrum tellus, ultrices placerat urna neque at urna. Curabitur in felis interdum, venenatis elit rhoncus, viverra velit. Duis eget semper ligula. Pellentesque sollicitudin ac ipsum at dictum. Fusce pretium dolor quis tempus tincidunt.
+
+Nam tincidunt sit amet nibh eu efficitur. Vivamus finibus dignissim dolor, in ornare ex convallis sit amet. Proin eget est vel libero finibus varius eu non diam. Nullam quis euismod felis. Aliquam bibendum ex sed maximus condimentum. Duis blandit, ex non tincidunt accumsan, mi velit commodo metus, nec elementum risus lacus malesuada ante. Aenean nulla ex, auctor in condimentum laoreet, tempor ac ex. Proin suscipit ipsum quis dictum sagittis. Pellentesque ac risus quis quam bibendum elementum. Nulla gravida quam sed nisi interdum ornare. Duis dictum ligula in convallis posuere.
+
+Praesent viverra auctor enim quis ultrices. Donec ac euismod arcu, gravida tristique enim. Maecenas quis tortor euismod neque mollis pellentesque sit amet a justo. Cras et diam id metus mattis bibendum sit amet vitae nisi. In ultricies dui at quam lobortis malesuada. Proin quis augue tincidunt, finibus sapien eu, pellentesque sem. Phasellus mollis dapibus velit ac interdum. Donec vitae imperdiet nulla. Cras sed velit vitae erat sollicitudin congue. Etiam quis ultrices sapien, id consequat nulla. Vivamus tincidunt tellus at felis gravida, eget tempus erat ultricies. Curabitur vel leo quis lectus laoreet iaculis vitae id nunc. In commodo urna non condimentum pellentesque. Nulla a ligula vitae turpis aliquam faucibus. Sed id condimentum dui, nec dapibus nulla.
+
+Nullam finibus, eros ornare congue efficitur, libero velit eleifend libero, imperdiet posuere turpis nibh non quam. Sed eget est nec orci ultricies pretium. Sed lectus velit, lacinia sit amet dui at, vulputate eleifend augue. Etiam ultrices est et tortor tristique, ut vehicula magna lacinia. Ut semper maximus ex, vitae semper lacus feugiat ut. Morbi molestie commodo felis at finibus. Nullam elementum dolor a sapien interdum, et aliquet enim mattis. Mauris ultricies turpis sed augue blandit pulvinar. Morbi pretium ut tellus non congue. Etiam at placerat massa. Ut in arcu quam. Etiam suscipit malesuada ex. Aliquam erat volutpat. Pellentesque mattis leo vel purus dapibus, a bibendum leo mollis.') where resource_id = 3;
+
 alter table development_resources modify start_date null;
 alter table development_resources modify resource_time null;
 alter table development_resources modify resource_location null;

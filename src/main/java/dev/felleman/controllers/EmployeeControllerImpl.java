@@ -1,9 +1,13 @@
 package dev.felleman.controllers;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -19,7 +23,7 @@ public class EmployeeControllerImpl implements EmployeeController {
 	private static Gson gson = new Gson();
 
 	@Override
-	public void getEmployee(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public String getEmployee(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		String input = request.getParameter("employeeId");
 
@@ -32,18 +36,22 @@ public class EmployeeControllerImpl implements EmployeeController {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			response.sendError(400, "ID parameter incorrectly formatted.");
-			return;
+			return null;
 		}
 
 		Employee e = es.getEmployee(id);
-		System.out.println(e);
-
-		response.getWriter().append((e != null) ? gson.toJson(e) : "{}");
+		
+		if (e != null) {
+			String emp = gson.toJson(e);
+			return emp;
+		} else {
+			return null;
+		}
 
 	}
 	
 	@Override
-	public void getEmployeeByEmail(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public Employee getEmployeeByEmail(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 		//System.out.println(gson.fromJson(request.getReader(), Employee.class));
 		Employee emp = gson.fromJson(request.getReader(), Employee.class);
@@ -56,15 +64,12 @@ public class EmployeeControllerImpl implements EmployeeController {
 		
 		Employee e = es.getEmployee(email);
 		
-		System.out.println(e);
-		
 		if (e.getPassword().equals(password)) {
-			response.sendRedirect("https://www.google.com");
+			return e;
 		}else {
-			response.getWriter().append("incorrect password");
+			return null;
 		}
 
-		
 
 	}
 

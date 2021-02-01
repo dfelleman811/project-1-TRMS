@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>New Request</title>
+</head>
+<body>
+    
+
+
+    <h3>Development Resource Information</h3>
+    <br/>
+    <label for='startDate'>Start date: </label>
+    <input id='startDate' type='date' value='yyyy-MM-dd' required>
+    <br/>
+    <br/>
+    <label for='startTime'>Start time: </label>
+    <input id='startTime' type='time'>
+    <br/>
+    <br/>
+    <label for='endTime'>End time: </label>
+    <input id='endTime' type='time'>
+    <br/>
+    <br/>
+    <label for='location'>Location: </label>
+    <input id='location' type='text'>
+    
+    <br/><br/>
+
+    <label for='cost'>Amount to be Reimbursed: </label>
+    <input id='cost' type='number' min='0.00' max='1000.00' pattern='/^\d{1}\,\d{1,4}\.\d{2}$' required>
+
+    <br/><br>
+
+    <label for='type'>Type of Professional Development Resource: </label>
+    <select id='type' value='selectOne' required>
+        <option value='selectOne'>--Select One--</option>
+        <option value='course'>University Course</option>
+        <option value='workshop'>Workshop</option>
+        <option value='seminar'>Seminar</option>
+        <option value='certPrep'>Certification Prep Class</option>
+        <option value='cert'>Certification</option>
+        <option value='training'>Training</option>
+        <option value='other'>Other</option> <!-- alert them that it may require further approval since not pre-determined category -->
+    </select>
+
+    <br/><br/>
+
+    <label for='grade'>Grading Format: </label>
+    <select id='grade' value='selectOne' required>
+        <option value='selectOne'>--Select One--</option>
+        <option value='letterGrade'>Letter Grade</option>
+        <option value='passfail'>Pass/Fail</option>
+        <option value='presentation'>Not graded - You will need to make a presentation</option>
+    </select>
+
+    <br/><br/>
+
+    <label for='description'>Description:</label>
+    <br/>
+    <textarea id="description" name='descriptionText' rows='5' cols='50' maxlength='3000' 
+            placeholder='Please type in description of professional development resource. Attachments can be (optionally) uploaded below.' required>
+    </textarea>
+
+
+    <br/><br/>
+
+    <label for='justification'>Justification:</label>
+    <br/>
+    <textarea id="justification" name='justificationText' rows='5' cols='50' maxlength='3000' 
+            placeholder='Please type in justication of professional development resource. Attachments can be (optionally) uploaded below.' required>
+    </textarea>
+
+    <br/><br/>
+    <label for='urgent'>Urgent Status: </label>
+    <select id='urgent' value='selectOne' required>
+        <option value='selectOne'>--Select One--</option>
+        <option value='no'>No, not urgent</option>
+        <option value='yes'>Yes, the start date is less than 2 weeks away</option>
+    </select>
+
+    <br/><br/>
+
+    <input id='file' type='file' name='filename'>
+    <input type='submit' value='Upload'>
+
+    <br/><br/><br/><br/><br/><br/>
+
+    <p id='formSubmit'>Submit</p>
+</body>
+<script src='../scripts/newRequestScript.js'></script>
+</html>
