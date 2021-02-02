@@ -41,8 +41,9 @@ public void the_returned_user_info_should_be_and(String returnedEmail, String re
 }
 
 @Then("^the title of the current page should be \"([^\"]*)\"$")
-public void the_title_of_the_current_page_should_be(String title) {
+public void the_title_of_the_current_page_should_be(String title) throws InterruptedException {
     
+	Thread.sleep(3000);
 	Assert.assertEquals(title, driver.getTitle());
 	
   

@@ -11,8 +11,8 @@ Feature: Login button and input works
 		Then the title of the current page should be "<title>"
 		
 	Examples:
-		|	email						|	password	|	returnedEmail				|	returnedPassword	|	title	|
-		|	basic.employee@example.com	|	password	|	basic.employee@example.com	|	password			|	home	|
+		|	email						|	password	|	returnedEmail				|	returnedPassword	|	title		|
+		|	basic.employee@example.com	|	password	|	basic.employee@example.com	|	password			|	Home Page	|
 		
 	
 	

@@ -148,6 +148,11 @@ public class RequestManager {
 			drs.addDevelopmentResource(request, response);
 			break;
 		}
+		
+		case "/Project-1-TRMS/logout.do": {
+			session.invalidate();
+			break;
+		}
 		default: {
 			response.sendError(418, "Reached Default Case - TEATIME!");
 			break;

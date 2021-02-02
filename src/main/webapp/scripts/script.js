@@ -54,26 +54,66 @@ function onHomePageLoad() {
 
         if (this.readyState == 4 && this.status == 200) {
             
-            console.log(this.responseText);
+            // load response text (session obj) into variable
+            let sessionObj = JSON.parse(this.responseText);
+            console.log(sessionObj);
+            // check type of employee
+            if (sessionObj.firstName.toLowerCase() == 'basic') {
+                loadBasicEmployee();
+            }
+
+            else if (sessionObj.lastName.toLowerCase() == 'departmenthead') {
+                loadDeptHead();
+            }
+            
+            else if (sessionObj.firstName.toLowerCase() == 'benco') {
+                loadBenCo()
+            }
+
+
+
         }
     }
-    // if basic employee
-        // can submit requests
-        // can view request statuses
-            // if no approval in time frame allow employee to alert 
-        // can view past reimbursements and remaining reimbursement amount
 
-    // if department head
+}
+
+function loadBasicEmployee() {
+  // if basic employee
+            // can submit requests
+            // can view request statuses
+            // if no approval in time frame allow employee to alert 
+            // can view past reimbursements and remaining reimbursement amount
+    
+
+}
+
+function loadDeptHead() {
+     // if department head
         // everything a basic employee can do plus....
-        // review requests that need approval (theirs)
+        // review requests that need approval in their department
             // if they're waiting on benco and no approval in time frame they can alert
         // can view departments requests status reimbursements etc
+    let buttonDiv = document.getElementById('buttons');
 
+    let allRequestsButton = document.createElement('div');
+    allRequestsButton.setAttribute('id', 'allRequests');
+    allRequestsButton.setAttribute('onclick','getAllRequests()');
+    allRequestsButton.innerHTML = "View All Department Requests";
+
+    buttonDiv.append(allRequestsButton);
+
+
+    
+}
+
+function loadBenCo() {
     // if benco
         //eveerything a dept head can do plus..
         // review all requests
         // view all reimbursements
 }
+
+
 
 // event listener for view requests statuses
 let viewStatus = document.getElementById('viewRequests');
@@ -114,7 +154,9 @@ function getAllRequests() {
 
             console.log(parsedReqList)
 
-            
+            parsedReqList.forEach(req => {
+                console.log(req);
+            }); 
             
             //newDiv.innerHTML = ;
 
@@ -126,4 +168,38 @@ function getAllRequests() {
 
         }
     }
+}
+
+function printToTable(req) {
+
+    // test with text first
+    let resultDiv = document.createElement('div');
+    resultDiv.setAttribute('id', 'resultDiv');
+
+    let nreq = document.createElement('p');
+    nreq.innerHTML = req.forEach(thing => req.thing);
+
+    // new table row
+    // let table  = document.getElementById('openRequestsTable');
+    
+    // document.createElement('tr');
+}
+
+function logout() {
+
+    // make ajax call and invalidate session
+
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.open("GET", "http://localhost:8080/Project-1-TRMS/logout.do", true);
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // return user to index page
+            window.location.href="http://localhost:8080/Project-1-TRMS/html/index.html";
+        }
+    }
+    
 }

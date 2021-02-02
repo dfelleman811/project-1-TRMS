@@ -1,6 +1,7 @@
 package dev.felleman.runners;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -34,6 +35,7 @@ public class LogInRunner {
 
 		// instantiate login page
 		loginPage = new LogInPage(driver);
+		
 	}
 
 	// Tear down method to run after all tests
