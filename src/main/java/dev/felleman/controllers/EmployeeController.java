@@ -13,7 +13,7 @@ import dev.felleman.models.Employee;
 
 public interface EmployeeController {
 
-	public String getEmployee(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	public Employee getEmployee(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
 	public Employee getEmployeeByEmail(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
 

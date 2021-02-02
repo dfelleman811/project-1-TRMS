@@ -1,5 +1,8 @@
-document.getElementById('formSubmit').addEventListener("click", submitForm());
 
+let submit = document.getElementById('formSubmit');
+submit.addEventListener('click', submitForm);
+
+console.log('before function...');
 function submitForm() {
 
     // collect all inputs
@@ -25,7 +28,7 @@ function submitForm() {
     let urgent = document.getElementById('urgent').value;
 
     // call add_request first so this is the first request
-    let request = {
+    let requestUrgent = {
         isUrgent: urgent
     }
 
@@ -42,7 +45,8 @@ function submitForm() {
         resourceJustification: justification,
     }
 
-    console.log(JSON.stringify(request));
+    console.log(requestUrgent);
+    console.log(resource);
     // send request to create a new request
     // create request object
     // let xhttp = new XMLHttpRequest();
@@ -63,4 +67,5 @@ function submitForm() {
 
 
 
-}
+};
+

@@ -44,7 +44,19 @@ function onHomePageLoad() {
 
     // Load appropriate elements based on user permissions
 
-    console.log(request.getSession());
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.open("GET", "http://localhost:8080/Project-1-TRMS/session.do", true);
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+            
+            console.log(this.responseText);
+        }
+    }
     // if basic employee
         // can submit requests
         // can view request statuses

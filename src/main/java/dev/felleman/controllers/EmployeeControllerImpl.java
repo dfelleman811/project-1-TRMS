@@ -23,7 +23,7 @@ public class EmployeeControllerImpl implements EmployeeController {
 	private static Gson gson = new Gson();
 
 	@Override
-	public String getEmployee(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public Employee getEmployee(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		String input = request.getParameter("employeeId");
 
@@ -40,10 +40,10 @@ public class EmployeeControllerImpl implements EmployeeController {
 		}
 
 		Employee e = es.getEmployee(id);
+		System.out.println(e);
 		
 		if (e != null) {
-			String emp = gson.toJson(e);
-			return emp;
+			return e;
 		} else {
 			return null;
 		}

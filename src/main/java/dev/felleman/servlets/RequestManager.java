@@ -1,5 +1,6 @@
 package dev.felleman.servlets;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.Enumeration;
 
@@ -28,6 +29,8 @@ import dev.felleman.models.Employee;
  */
 public class RequestManager {
 	
+	public Gson gson = new Gson();
+	
 
 	public EmployeeController ec = new EmployeeControllerImpl();
 	public RequestController rc = new RequestControllerImpl();
@@ -42,7 +45,9 @@ public class RequestManager {
 		// confirm
 		System.out.println(uri);
 		
-		
+		//open session
+		HttpSession session = request.getSession();
+
 		
 		
 
@@ -58,6 +63,12 @@ public class RequestManager {
 			System.out.println("home page now?");
 			break;
 		}
+		
+		case "/Project-1-TRMS/session.do": {
+			Employee e = (Employee) session.getAttribute("loggedInUser");
+			response.getWriter().append(gson.toJson(e));
+			break;
+		}
 
 		case "/Project-1-TRMS/getEmployee.do": {
 			System.out.println("get employee case");
@@ -66,18 +77,16 @@ public class RequestManager {
 			if (request.getParameter("employeeId") == null) {
 				Employee e = ec.getEmployeeByEmail(request, response);
 				if (e != null) {
-					//open session
-					HttpSession session = request.getSession();
 					session.setAttribute("loggedInUser", e);
-					RequestDispatcher dis = request.getRequestDispatcher("/html/home.html");
-					dis.forward(request, response);
+					System.out.println(session.getAttribute("loggedInUser"));
 				}else {
 					response.sendError(400, "Email parameter improperly formatted.");
 				}
 			// else use the id in param
 			} else {
-				String emp = ec.getEmployee(request, response);
-				response.getWriter().append(emp);
+				Employee e = ec.getEmployee(request, response);
+				session.setAttribute("loggedInUser", e);
+				System.out.println(session.getAttribute("loggedInUser"));
 			}
 			break;
 		}
