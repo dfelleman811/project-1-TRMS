@@ -1,0 +1,11 @@
+#navBar {
+    list-style-type:none; 
+    margin:0; 
+    padding:0;
+    background-color: grey;
+    width: 25%;
+}
+
+#navBar :hover {
+    background-color: orange;
+}

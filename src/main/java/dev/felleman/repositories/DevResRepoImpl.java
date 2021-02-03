@@ -34,8 +34,8 @@ public class DevResRepoImpl implements DevResRepo {
 				DevelopmentResource d = new DevelopmentResource();
 				
 				d.setResourceId(rs.getInt("resource_id"));
-				d.setStartDate(rs.getDate("start_date"));
-				d.setResourceTime(rs.getDate("resource_time"));
+				d.setStartDate(rs.getString("start_date"));
+				d.setResourceTime(rs.getString("resource_time"));
 				d.setResourceLocation(rs.getString("resource_location"));
 				d.setResourceCost(rs.getInt("resource_cost"));
 				d.setGradingFormatId(rs.getInt("grading_format_id"));
@@ -70,8 +70,8 @@ public class DevResRepoImpl implements DevResRepo {
 				DevelopmentResource d = new DevelopmentResource();
 				
 				d.setResourceId(rs.getInt("resource_id"));
-				d.setStartDate(rs.getDate("start_date"));
-				d.setResourceTime(rs.getDate("resource_time"));
+				d.setStartDate(rs.getString("start_date"));
+				d.setResourceTime(rs.getString("resource_time"));
 				d.setResourceLocation(rs.getString("resource_location"));
 				d.setResourceCost(rs.getInt("resource_cost"));
 				d.setGradingFormatId(rs.getInt("grading_format_id"));
@@ -109,8 +109,8 @@ public class DevResRepoImpl implements DevResRepo {
 				DevelopmentResource d = new DevelopmentResource();
 				
 				d.setResourceId(rs.getInt("resource_id"));
-				d.setStartDate(rs.getDate("start_date"));
-				d.setResourceTime(rs.getDate("resource_time"));
+				d.setStartDate(rs.getString("start_date"));
+				d.setResourceTime(rs.getString("resource_time"));
 				d.setResourceLocation(rs.getString("resource_location"));
 				d.setResourceCost(rs.getInt("resource_cost"));
 				d.setGradingFormatId(rs.getInt("grading_format_id"));

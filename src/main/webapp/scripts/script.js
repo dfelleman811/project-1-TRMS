@@ -155,7 +155,7 @@ function getAllRequests() {
             console.log(parsedReqList)
 
             parsedReqList.forEach(req => {
-                console.log(req);
+                printToTable(req);
             }); 
             
             //newDiv.innerHTML = ;
@@ -172,13 +172,32 @@ function getAllRequests() {
 
 function printToTable(req) {
 
-    // test with text first
-    let resultDiv = document.createElement('div');
-    resultDiv.setAttribute('id', 'resultDiv');
+    // get empty table
+    let table = document.getElementById('requestsTable');
 
-    let nreq = document.createElement('p');
-    nreq.innerHTML = req.forEach(thing => req.thing);
+    // create new row and set attributes
+    let newRow = document.createElement('tr');
+    newRow.setAttribute('id', `${req.requestId}`);
 
+    // loop through each returned request and set as table data in row
+    for (key in req) {
+        // create td
+        let newData= document.createElement('td');
+        newData.setAttribute('class', `${req}`)
+
+        // set inner html of td
+        newData.innerHTML= `${req[key]}`;
+
+        // add to new row
+        newRow.append(newData);
+
+        // add to table
+        table.append(newRow);
+    }
+
+  
+
+    
     // new table row
     // let table  = document.getElementById('openRequestsTable');
     

@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
+import dev.felleman.models.Employee;
 import dev.felleman.models.Request;
 import dev.felleman.services.RequestServices;
 import dev.felleman.services.RequestServicesImpl;
@@ -95,13 +96,13 @@ public class RequestControllerImpl implements RequestController {
 	}
 
 	@Override
-	public void addRequest(HttpServletRequest request, HttpServletResponse response) throws JsonSyntaxException, JsonIOException, IOException {
+	public void addRequest(HttpServletRequest request, HttpServletResponse response, Employee e) throws JsonSyntaxException, JsonIOException, IOException {
 		
 		Request r = gson.fromJson(request.getReader(), Request.class);
 		
-		rs.addRequest(r.getEmployeeId(), r.getIsUrgent());
+		rs.addRequest(e.getEmployeeId(), r.getIsUrgent());
 		
-		response.getWriter().append(gson.toJson(r));
+		response.getWriter().append("Request Added");
 		
 	}
 

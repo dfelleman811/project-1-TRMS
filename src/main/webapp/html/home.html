@@ -2,15 +2,27 @@
 <html lang="en">
 <head>
     <title>Home Page</title>
+    <link rel='stylesheet' href='../styles/homestyle.css' type='text/css'>
 </head>
 <body id='body' onload='onHomePageLoad()'>
     <h1>Welcome to the Home Page. Select an option below to continue</h1>
 
 
-        <br/><br/>
-        <!-- A starting empty div that will be loaded base on user's status-->
+    
 
-        <div id='buttons'>
+    <br/><br/>
+    <!-- Navigation side bar-->
+    
+    <ul id='navBar'>
+
+        <li><a href='newRequest.html'>Submit New Request</a></li>
+        <li><p>View Requests Statuses</p></li>
+        <li><p>View All Requests</p></li>
+        <li><p>Log Out</p></li>
+
+    </ul>
+
+    <div id='buttons'>
 
         <div id='newRequest' onclick='createRequest()'>Submit New Request</div>
 
@@ -19,6 +31,25 @@
 
         <!-- <br/><br/> -->
         <!-- <div id="requests" onclick='getAllRequests()'>See All Requests</div> -->
+
+        <br/><br/><br/><br/>
+
+        <table id='requestsTable'>
+
+            <tr>
+                <th>Request ID</th>
+                <th>Submit Date</th>
+                <th>Urgent</th>
+                <th>Status</th>
+                <th>Employee ID</th>
+                <th>Development Resource</th>
+            </tr>
+
+
+        </table>
+
+
+
 
         <br/><br/>
         <div id='logout' onclick='logout()'>Log Out</div>

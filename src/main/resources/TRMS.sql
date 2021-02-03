@@ -194,6 +194,11 @@ create table development_resources (
     attachments blob -- think I need to link this to another table?
 );
 
+alter table development_resources modify start_date date;
+alter table development_resources modify resource_time date;
+
+delete development_resources where resource_id = 42;
+
 select * from development_resources;
 
 alter table development_resources rename column pd_type to res_type;
@@ -342,7 +347,7 @@ select * from requests order by last_updated desc;
 update requests set status = 'closed' where request_id = 5;
 
 
-
+select * from requests;
 select * from development_resources;
 select * from departments;
 
@@ -352,10 +357,15 @@ is
     res_id number := DEV_RES_ID_SEQ.currval;
 begin
     
-    insert into development_resources values (res_id, starting, time, location, cost, grade_format_id, res_type, res_description, res_just, null);
+    insert into development_resources values (res_id, to_date(starting, 'DD-MON-YYYY'), to_date(time, 'DD-MON-YYYY'), location, cost, grade_format_id, res_type, null, res_description, res_just);
 end;
 
-call add_dev_resource(current_date, current_date, 'NYU', 500, 1, 'course', 'management', 'improvement');
+select dev_res_id_seq.currval from dual;
+
+
+call add_dev_resource('', '', 'School', 300, 1, 'course', 'management', 'improvement');
+
+insert into development_resources values (42, 'startDate', 'startTime', 'location', 300, 1, 'course', null, 'management', 'improvement');
 
 select * from employees;
 update employees set supervisor_id = 14 where employee_id = 18;

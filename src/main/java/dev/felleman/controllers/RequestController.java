@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
+import dev.felleman.models.Employee;
 import dev.felleman.models.Request;
 
 public interface RequestController {
@@ -21,7 +22,7 @@ public interface RequestController {
 	
 	public void getAllRequestsByStatus(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
-	public void addRequest(HttpServletRequest request, HttpServletResponse response) throws JsonSyntaxException, JsonIOException, IOException;
+	public void addRequest(HttpServletRequest request, HttpServletResponse response, Employee e) throws JsonSyntaxException, JsonIOException, IOException;
 	
 	public void updateRequest(HttpServletRequest request, HttpServletResponse response) throws JsonSyntaxException, JsonIOException, IOException;
 	

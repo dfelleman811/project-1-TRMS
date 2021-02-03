@@ -5,8 +5,8 @@ import java.sql.Date;
 public class DevelopmentResource {
 
 	private int resourceId;
-	private Date startDate;
-	private Date resourceTime;
+	private String startDate;
+	private String resourceTime;
 	private String resourceLocation;
 	private int resourceCost;
 	private int gradingFormatId;
@@ -19,7 +19,7 @@ public class DevelopmentResource {
 		super();
 	}
 
-	public DevelopmentResource(Date startDate, Date resourceTime, String resourceLocation, int resourceCost,
+	public DevelopmentResource(String startDate, String resourceTime, String resourceLocation, int resourceCost,
 			int gradingFormatId, String resourceType, String resourceDescription, String resourceJustification) {
 		super();
 		this.startDate = startDate;
@@ -32,7 +32,7 @@ public class DevelopmentResource {
 		this.resourceJustification = resourceJustification;
 	}
 
-	public DevelopmentResource(int resourceId, Date startDate, Date resourceTime, String resourceLocation,
+	public DevelopmentResource(int resourceId, String startDate, String resourceTime, String resourceLocation,
 			int resourceCost, int gradingFormatId, String resourceType, String resourceDescription,
 			String resourceJustification) {
 		super();
@@ -55,19 +55,19 @@ public class DevelopmentResource {
 		this.resourceId = resourceId;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return this.startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getResourceTime() {
+	public String getResourceTime() {
 		return this.resourceTime;
 	}
 
-	public void setResourceTime(Date resourceTime) {
+	public void setResourceTime(String resourceTime) {
 		this.resourceTime = resourceTime;
 	}
 

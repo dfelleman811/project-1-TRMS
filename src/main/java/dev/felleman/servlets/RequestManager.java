@@ -111,7 +111,8 @@ public class RequestManager {
 		
 		case "/Project-1-TRMS/addRequest.do": {
 			System.out.println("adding request");
-			rc.addRequest(request, response);
+			Employee e = (Employee) session.getAttribute("loggedInUser");
+			rc.addRequest(request, response, e);
 			break;
 		}
 		
@@ -143,7 +144,7 @@ public class RequestManager {
 			break;
 		}
 		
-		case "/Project-1-TRMS/addResource.do": {
+		case "/Project-1-TRMS/addDevRes.do": {
 			System.out.println("adding resource");
 			drs.addDevelopmentResource(request, response);
 			break;
