@@ -180,6 +180,11 @@ create table archived_requests (
     development_resource number(10)
 );
 
+alter table archived_requests add grade number(10);
+
+alter table archived_requests add constraint fk_arch_graderef foreign key (grade) references grading_references(grade_id);
+
+select * from archived_requests;
 -- development resource table with all details
 create table development_resources (
     resource_id number(10) PRIMARY KEY,
@@ -195,11 +200,27 @@ create table development_resources (
 );
 
 alter table development_resources modify start_date date;
-alter table development_resources modify resource_time date;
+alter table development_resources modify resource_time timestamp;
+
+alter table development_resources rename column grading_format_id to grading_format;
+alter table development_resources modify grading_format varchar2(20);
+
+alter table development_resources add constraint check_grade_type check (grading_format in ('letter grade', 'pass/fail','none/presentation'));
+
+
+alter table development_resources drop constraint FK_DEVRES_GRADEFORM;
+
+select * from grading_references;
+
+alter table grading_references rename column grade_type to grade;
+alter table grading_references add grade_format varchar2(20);
+
+alter table development_resources add constraint fk_devres_gradeform foreign key (grading_format) references grading_references(grade_format);
 
 delete development_resources where resource_id = 42;
 
 select * from development_resources;
+
 
 alter table development_resources rename column pd_type to res_type;
 alter table development_resources rename column pd_description to res_description;
@@ -304,6 +325,9 @@ insert all
     into grading_references (grade_id, grade_type, passing) values (9, 'presentation_fail', 0)
 select 1 from dual;
 
+update grading_references set grade_format = 'letter grade' where grade_id < 6;
+update grading_references set grade_format = 'pass/fail' where grade_id = 6 or grade_id=7;
+update grading_references set grade_format = 'none/presentation' where grade_id = 8 or grade_id = 9;
 
 select * from requests;
 
@@ -346,26 +370,34 @@ select * from requests order by last_updated desc;
 
 update requests set status = 'closed' where request_id = 5;
 
+delete requests where request_id = 48;
 
-select * from requests;
+select * from requests order by submit_date desc;
 select * from development_resources;
+
 select * from departments;
 
+select * from grading_references;
 
-create or replace procedure add_dev_resource(starting date, time date, location varchar2, cost number, grade_format_id number, res_type varchar2, res_description varchar2, res_just varchar2) 
+alter table development_resources drop column attachments;
+
+
+create or replace procedure add_dev_resource(starting varchar2, time varchar2, location varchar2, cost number, gr_format varchar2, res_type varchar2, res_description varchar2, res_just varchar2) 
 is
     res_id number := DEV_RES_ID_SEQ.currval;
 begin
     
-    insert into development_resources values (res_id, to_date(starting, 'DD-MON-YYYY'), to_date(time, 'DD-MON-YYYY'), location, cost, grade_format_id, res_type, null, res_description, res_just);
+    insert into development_resources values (res_id, to_date(starting, 'YYYY-MM-DD'), time, location, cost, gr_format, res_type, res_description, res_just);
 end;
 
 select dev_res_id_seq.currval from dual;
 
 
-call add_dev_resource('', '', 'School', 300, 1, 'course', 'management', 'improvement');
+call add_dev_resource('02-FEB-2021', '02-JAN-21 09:00:00.00', 'School', 300, 'letter grade', 'course', 'management', 'improvement');
 
-insert into development_resources values (42, 'startDate', 'startTime', 'location', 300, 1, 'course', null, 'management', 'improvement');
+insert into development_resources values (49, null, '9:00 AM', 'general assembly', 300, 'none/presentation', 'workshop', 'workshop', 'worth it');
+
+delete development_resources where resource_id=49;
 
 select * from employees;
 update employees set supervisor_id = 14 where employee_id = 18;
@@ -374,3 +406,13 @@ delete employees where employee_id = 23; -- will have to think about what data w
 
 
 delete employees where employee_id = 21 OR employee_id = 23;
+
+
+create table reimbursements (
+
+    payment_id number(10) PRIMARY KEY,
+    amount number(10) NOT NULL,
+    emp_id number(10), -- FK to employee table
+    devres_id number(10), -- FK to devres table
+    req_id number(10) --FK to request table
+);

@@ -103,6 +103,12 @@ public class RequestManager {
 			break;
 		}
 		
+		case "/Project-1-TRMS/getEmpRequests.do": {
+			Employee e = (Employee) session.getAttribute("loggedInUser");
+			rc.getAllRequestsByEmployee(request, response, e);
+			break;
+		}
+		
 		case "/Project-1-TRMS/getAllRequests.do": {
 			System.out.println("get all requests case");
 			rc.getAllRequests(request, response);

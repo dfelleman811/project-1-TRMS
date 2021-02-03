@@ -52,22 +52,22 @@ public class RequestControllerImpl implements RequestController {
 	}
 
 	@Override
-	public void getAllRequestsByEmployee(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String input = request.getParameter("email");
+	public void getAllRequestsByEmployee(HttpServletRequest request, HttpServletResponse response, Employee e) throws IOException {
+		int id = e.getEmployeeId();
 		
-		System.out.println(input);
+		System.out.println(id);
 		
-		String email;
+//		int id;
+//		
+//		try {
+//			id = Integer.parseInt(input);
+//		} catch (NumberFormatException ex) {
+//			ex.printStackTrace();
+//			response.sendError(400, "ID paramter incorrectly formatted.");
+//			return;
+//		}
 		
-		try {
-			email = input.toString();
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			response.sendError(400, "Email paramter incorrectly formatted.");
-			return;
-		}
-		
-		List<Request> reqList = rs.getAllRequestsByEmployee(email);
+		List<Request> reqList = rs.getAllRequestsByEmployee(id);
 		System.out.println(reqList);
 		
 		response.getWriter().append(gson.toJson(reqList));

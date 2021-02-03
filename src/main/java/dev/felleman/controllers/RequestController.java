@@ -18,7 +18,7 @@ public interface RequestController {
 	
 	public void getAllRequests(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
-	public void getAllRequestsByEmployee(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	public void getAllRequestsByEmployee(HttpServletRequest request, HttpServletResponse response, Employee e) throws IOException;
 	
 	public void getAllRequestsByStatus(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	

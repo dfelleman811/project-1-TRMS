@@ -370,7 +370,7 @@ select * from requests order by last_updated desc;
 
 update requests set status = 'closed' where request_id = 5;
 
-delete requests where request_id = 47;
+delete requests where request_id = 48;
 
 select * from requests order by submit_date desc;
 select * from development_resources;
@@ -387,7 +387,7 @@ is
     res_id number := DEV_RES_ID_SEQ.currval;
 begin
     
-    insert into development_resources values (res_id, to_date(starting, 'DD-MON-YYYY'), time, location, cost, gr_format, res_type, res_description, res_just);
+    insert into development_resources values (res_id, to_date(starting, 'YYYY-MM-DD'), time, location, cost, gr_format, res_type, res_description, res_just);
 end;
 
 select dev_res_id_seq.currval from dual;
@@ -395,7 +395,9 @@ select dev_res_id_seq.currval from dual;
 
 call add_dev_resource('02-FEB-2021', '02-JAN-21 09:00:00.00', 'School', 300, 'letter grade', 'course', 'management', 'improvement');
 
-insert into development_resources values (42, '02-FEB-2021', '02-JAN-21 09:00:00.00', 'location', 300, 1, 'course', null, 'management', 'improvement');
+insert into development_resources values (49, null, '9:00 AM', 'general assembly', 300, 'none/presentation', 'workshop', 'workshop', 'worth it');
+
+delete development_resources where resource_id=49;
 
 select * from employees;
 update employees set supervisor_id = 14 where employee_id = 18;

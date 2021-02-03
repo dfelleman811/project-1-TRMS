@@ -21,8 +21,8 @@ public class RequestServicesImpl implements RequestServices {
 	}
 
 	@Override
-	public List<Request> getAllRequestsByEmployee(String email) {
-		return rr.getAllRequestsByEmployee(email);
+	public List<Request> getAllRequestsByEmployee(int empId) {
+		return rr.getAllRequestsByEmployee(empId);
 	}
 
 	@Override

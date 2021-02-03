@@ -117,18 +117,32 @@ function loadBenCo() {
 
 // event listener for view requests statuses
 let viewStatus = document.getElementById('viewRequests');
-document.addEventListener("click", viewRequestStatuses());
+document.addEventListener("click", getEmpRequests);
 
 
 function createRequest() {
     window.location.href="http://localhost:8080/Project-1-TRMS/html/newRequest.html";
 }
 
-function viewRequestStatuses() {
+function getEmpRequests() {
     // stop page from reloading?
 
     // get employee id from session
-    let id = 0;
+    // let id = sessionObj.employeeId;
+
+    // get request
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.open("GET", "http://localhost:8080/Project-1-TRMS/getEmpRequests.do", true);
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+        }
+    }
 
 }
 

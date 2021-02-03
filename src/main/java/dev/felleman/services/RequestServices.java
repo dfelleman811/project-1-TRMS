@@ -10,7 +10,7 @@ public interface RequestServices {
 	
 	public List<Request> getAllRequests();
 	
-	public List<Request> getAllRequestsByEmployee(String email);
+	public List<Request> getAllRequestsByEmployee(int empId);
 	
 	public List<Request> getAllRequestsByStatus(String status);
 	

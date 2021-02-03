@@ -83,17 +83,17 @@ public class RequestRepoImpl implements RequestRepo {
 	}
 
 	@Override
-	public List<Request> getAllRequestsByEmployee(String email) {
+	public List<Request> getAllRequestsByEmployee(int empId) {
 		
 		List<Request> reqList = new ArrayList<Request>();
 		
 		try {
 		
-			String sql = "select * from requests where email = ?";
+			String sql = "select * from requests where employee_id = ?";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			ps.setString(1, email);
+			ps.setString(1, Integer.toString(empId));
 			
 			ResultSet rs = ps.executeQuery();
 		
