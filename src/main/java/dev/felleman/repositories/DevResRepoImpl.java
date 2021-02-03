@@ -38,7 +38,7 @@ public class DevResRepoImpl implements DevResRepo {
 				d.setResourceTime(rs.getString("resource_time"));
 				d.setResourceLocation(rs.getString("resource_location"));
 				d.setResourceCost(rs.getInt("resource_cost"));
-				d.setGradingFormatId(rs.getInt("grading_format_id"));
+				d.setGradingFormat(rs.getString("grading_format"));
 				d.setResourceType(rs.getString("res_type"));
 				d.setResourceDescription(rs.getString("res_description"));
 				d.setResourceJustification(rs.getString("justification"));
@@ -74,7 +74,7 @@ public class DevResRepoImpl implements DevResRepo {
 				d.setResourceTime(rs.getString("resource_time"));
 				d.setResourceLocation(rs.getString("resource_location"));
 				d.setResourceCost(rs.getInt("resource_cost"));
-				d.setGradingFormatId(rs.getInt("grading_format_id"));
+				d.setGradingFormat(rs.getString("grading_format_"));
 				d.setResourceType(rs.getString("res_type"));
 				d.setResourceDescription(rs.getString("res_description"));
 				d.setResourceJustification(rs.getString("justification"));
@@ -113,7 +113,7 @@ public class DevResRepoImpl implements DevResRepo {
 				d.setResourceTime(rs.getString("resource_time"));
 				d.setResourceLocation(rs.getString("resource_location"));
 				d.setResourceCost(rs.getInt("resource_cost"));
-				d.setGradingFormatId(rs.getInt("grading_format_id"));
+				d.setGradingFormat(rs.getString("grading_format"));
 				d.setResourceType(rs.getString("res_type"));
 				d.setResourceDescription(rs.getString("res_description"));
 				d.setResourceJustification(rs.getString("justification"));
@@ -138,11 +138,11 @@ public class DevResRepoImpl implements DevResRepo {
 			
 			CallableStatement cs = conn.prepareCall(sql);
 			
-			cs.setString(1, r.getStartDate().toString());
-			cs.setString(2, r.getResourceTime().toString());
+			cs.setString(1, r.getStartDate());
+			cs.setString(2, r.getResourceTime());
 			cs.setString(3, r.getResourceLocation());
 			cs.setString(4, Integer.toString(r.getResourceCost()));
-			cs.setString(5, Integer.toString(r.getGradingFormatId()));
+			cs.setString(5, r.getGradingFormat());
 			cs.setString(6, r.getResourceType());
 			cs.setString(7, r.getResourceDescription());
 			cs.setString(8, r.getResourceJustification());
@@ -170,7 +170,7 @@ public class DevResRepoImpl implements DevResRepo {
 			ps.setString(2, r.getResourceTime().toString());
 			ps.setString(3, r.getResourceLocation());
 			ps.setString(4, Integer.toString(r.getResourceCost()));
-			ps.setString(5, Integer.toString(r.getGradingFormatId()));
+			ps.setString(5, r.getGradingFormat());
 			ps.setString(6, r.getResourceType());
 			ps.setString(7, r.getResourceDescription());
 			ps.setString(8, r.getResourceJustification());

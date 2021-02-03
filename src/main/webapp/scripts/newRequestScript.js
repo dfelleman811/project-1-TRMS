@@ -45,6 +45,11 @@ function submitForm() {
     let justification = document.getElementById('justification').value;
 
     let urgent = document.getElementById('urgent').value;
+    if (urgent == 'yes') {
+        urgent = 1;
+    }else{
+        urgent=0;
+    }
 
     // call add_request first so this is the first request
     let requestUrgent = {
@@ -54,12 +59,12 @@ function submitForm() {
     // then we call add_resource so this info comes second
     let resource = {
         startDate: startDate,
-        startTime: startTime,
+        resourceTime: startTime,
         endTime: endTime,
         resourceLocation: location,
-        cost: cost,
-        gradingFormat: format,
-        resourcetype: type,
+        resourceCost: cost,
+        gradingFormatId: format,
+        resourceType: type,
         resourceDescription: description,
         resourceJustification: justification,
     }
@@ -77,7 +82,7 @@ function submitForm() {
     //set headers
     xhttp.setRequestHeader('Content-Type', 'application/json');
 
-    xhttp.send(JSON.stringify(request));
+    xhttp.send(JSON.stringify(requestUrgent));
 
     xhttp.onreadystatechange = function() {
 
@@ -90,7 +95,7 @@ function submitForm() {
 
     xhttp2.open('POST', "http://localhost:8080/Project-1-TRMS/addDevRes.do", true);
 
-    xhttp2.send(JSON.stringify(reource));
+    xhttp2.send(JSON.stringify(resource));
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {

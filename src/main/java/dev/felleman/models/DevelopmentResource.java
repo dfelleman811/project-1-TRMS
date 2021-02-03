@@ -9,7 +9,7 @@ public class DevelopmentResource {
 	private String resourceTime;
 	private String resourceLocation;
 	private int resourceCost;
-	private int gradingFormatId;
+	private String gradingFormat;
 	private String resourceType;
 	private String resourceDescription;
 	private String resourceJustification;
@@ -20,20 +20,20 @@ public class DevelopmentResource {
 	}
 
 	public DevelopmentResource(String startDate, String resourceTime, String resourceLocation, int resourceCost,
-			int gradingFormatId, String resourceType, String resourceDescription, String resourceJustification) {
+			String gradingFormat, String resourceType, String resourceDescription, String resourceJustification) {
 		super();
 		this.startDate = startDate;
 		this.resourceTime = resourceTime;
 		this.resourceLocation = resourceLocation;
 		this.resourceCost = resourceCost;
-		this.gradingFormatId = gradingFormatId;
+		this.gradingFormat = gradingFormat;
 		this.resourceType = resourceType;
 		this.resourceDescription = resourceDescription;
 		this.resourceJustification = resourceJustification;
 	}
 
 	public DevelopmentResource(int resourceId, String startDate, String resourceTime, String resourceLocation,
-			int resourceCost, int gradingFormatId, String resourceType, String resourceDescription,
+			int resourceCost, String gradingFormat, String resourceType, String resourceDescription,
 			String resourceJustification) {
 		super();
 		this.resourceId = resourceId;
@@ -41,7 +41,7 @@ public class DevelopmentResource {
 		this.resourceTime = resourceTime;
 		this.resourceLocation = resourceLocation;
 		this.resourceCost = resourceCost;
-		this.gradingFormatId = gradingFormatId;
+		this.gradingFormat = gradingFormat;
 		this.resourceType = resourceType;
 		this.resourceDescription = resourceDescription;
 		this.resourceJustification = resourceJustification;
@@ -87,12 +87,12 @@ public class DevelopmentResource {
 		this.resourceCost = resourceCost;
 	}
 
-	public int getGradingFormatId() {
-		return this.gradingFormatId;
+	public String getGradingFormat() {
+		return this.gradingFormat;
 	}
 
-	public void setGradingFormatId(int gradingFormatId) {
-		this.gradingFormatId = gradingFormatId;
+	public void setGradingFormat(String gradingFormatId) {
+		this.gradingFormat = gradingFormatId;
 	}
 
 	public String getResourceType() {
@@ -123,7 +123,7 @@ public class DevelopmentResource {
 	public String toString() {
 		return "DevelopmentResources [resourceId=" + this.resourceId + ", startDate=" + this.startDate
 				+ ", resourceTime=" + this.resourceTime + ", resourceLocation=" + this.resourceLocation
-				+ ", resourceCost=" + this.resourceCost + ", gradingFormatId=" + this.gradingFormatId
+				+ ", resourceCost=" + this.resourceCost + ", gradingFormatId=" + this.gradingFormat
 				+ ", resourceType=" + this.resourceType + ", resourceDescription=" + this.resourceDescription
 				+ ", resourceJustification=" + this.resourceJustification + "]";
 	}
