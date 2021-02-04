@@ -41,19 +41,7 @@ to the benco that, if the grade is passing, they should be reimbursed-->
             }
         }
 
-        // get session req info
-        let xhttp2 = new XMLHttpRequest();
-
-        xhttp2.open("GET", "http://localhost:8080/Project-1-TRMS/reqSession.do", true);
-
-        xhttp2.send();
-
-        xhttp2.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
-            }
-            
-        }
+        
 
 
     }
@@ -64,10 +52,43 @@ to the benco that, if the grade is passing, they should be reimbursed-->
         // collect input
         let newStatus = document.getElementById('approval').value;
 
-        // send post request with new status
-        let xhttp = new XMLHttpRequest();
+        // get session current req info
+        let xhttp2 = new XMLHttpRequest();
 
-        xhttp.open("POST", "http://localhost:8080/Project-1-TRMS/")
+        xhttp2.open("GET", "http://localhost:8080/Project-1-TRMS/reqSession.do", true);
+
+        xhttp2.send();
+
+        xhttp2.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+
+                let curReq = JSON.parse(this.responseText);
+
+                let reqUpdate = {
+                    requestId: curReq.requestId,
+                    isUrgent: curReq.isUrgent,
+                    status: newStatus
+                }
+
+                // send post request with new status
+                let xhttp = new XMLHttpRequest();
+
+                xhttp.open("POST", "http://localhost:8080/Project-1-TRMS/updateStatus.do", true);
+
+                xhttp.send(JSON.stringify(reqUpdate));
+
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText);
+                    }
+                 }       
+            }
+            
+        }
+        
+
+        
     }
 
 </script>

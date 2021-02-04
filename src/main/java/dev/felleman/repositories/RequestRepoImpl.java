@@ -33,7 +33,7 @@ public class RequestRepoImpl implements RequestRepo {
 				Request r = new Request();
 				
 				r.setRequestId(rs.getInt("request_id"));
-				r.setSubmitDate(rs.getDate("submit_date"));
+				r.setSubmitDate(rs.getString("submit_date"));
 				r.setIsUrgent(rs.getInt("urgent"));
 				r.setStatus(rs.getString("status"));
 				r.setEmployeeId(rs.getInt("employee_id"));
@@ -66,7 +66,7 @@ public class RequestRepoImpl implements RequestRepo {
 				Request r = new Request();
 				
 				r.setRequestId(rs.getInt("request_id"));
-				r.setSubmitDate(rs.getDate("submit_date"));
+				r.setSubmitDate(rs.getString("submit_date"));
 				r.setIsUrgent(rs.getInt("urgent"));
 				r.setStatus(rs.getString("status"));
 				r.setEmployeeId(rs.getInt("employee_id"));
@@ -101,7 +101,7 @@ public class RequestRepoImpl implements RequestRepo {
 				Request r = new Request();
 				
 				r.setRequestId(rs.getInt("request_id"));
-				r.setSubmitDate(rs.getDate("submit_date"));
+				r.setSubmitDate(rs.getString("submit_date"));
 				r.setIsUrgent(rs.getInt("urgent"));
 				r.setStatus(rs.getString("status"));
 				r.setEmployeeId(rs.getInt("employee_id"));
@@ -136,7 +136,7 @@ public class RequestRepoImpl implements RequestRepo {
 				Request r = new Request();
 				
 				r.setRequestId(rs.getInt("request_id"));
-				r.setSubmitDate(rs.getDate("submit_date"));
+				r.setSubmitDate(rs.getString("submit_date"));
 				r.setIsUrgent(rs.getInt("urgent"));
 				r.setStatus(rs.getString("status"));
 				r.setEmployeeId(rs.getInt("employee_id"));
@@ -170,7 +170,7 @@ public class RequestRepoImpl implements RequestRepo {
 				Request r = new Request();
 				
 				r.setRequestId(rs.getInt("request_id"));
-				r.setSubmitDate(rs.getDate("submit_date"));
+				r.setSubmitDate(rs.getString("submit_date"));
 				r.setIsUrgent(rs.getInt("urgent"));
 				r.setStatus(rs.getString("status"));
 				r.setEmployeeId(rs.getInt("employee_id"));

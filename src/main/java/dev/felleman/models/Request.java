@@ -5,10 +5,10 @@ import java.sql.Date;
 public class Request {
 
 	private int requestId;
-	private Date submitDate;
+	private String submitDate;
 	private int isUrgent;
 	private String status;
-	private Date lastUpdated;
+	private String lastUpdated;
 	private int employeeId;
 	private int devResource;
 
@@ -16,7 +16,7 @@ public class Request {
 		super();
 	}
 
-	public Request(Date submitDate, int isUrgent, String status, Date lastUpdated, int employeeId, int devResource) {
+	public Request(String submitDate, int isUrgent, String status, String lastUpdated, int employeeId, int devResource) {
 		super();
 		this.submitDate = submitDate;
 		this.isUrgent = isUrgent;
@@ -26,7 +26,7 @@ public class Request {
 		this.devResource = devResource;
 	}
 
-	public Request(int requestId, Date submitDate, int isUrgent, String status, Date lastUpdated, int employeeId, int devResource) {
+	public Request(int requestId, String submitDate, int isUrgent, String status, int employeeId, int devResource) {
 		super();
 		this.requestId = requestId;
 		this.submitDate = submitDate;
@@ -45,11 +45,11 @@ public class Request {
 		this.requestId = requestId;
 	}
 
-	public Date getSubmitDate() {
+	public String getSubmitDate() {
 		return this.submitDate;
 	}
 
-	public void setSubmitDate(Date submitDate) {
+	public void setSubmitDate(String submitDate) {
 		this.submitDate = submitDate;
 	}
 
@@ -69,11 +69,11 @@ public class Request {
 		this.status = status;
 	}
 	
-	public Date getLastUpdated() {
+	public String getLastUpdated() {
 		return this.lastUpdated;
 	}
 	
-	public void setLastUpdated(Date lastUpdated) {
+	public void setLastUpdated(String lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 

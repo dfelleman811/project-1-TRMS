@@ -78,6 +78,7 @@ public class ServicesTests {
 		rs.addRequest(r.getEmployeeId(), r.getIsUrgent()); // I just checked that the DB updated correctly, it did.
 		
 	}
+
 	
 	@Test
 	public void getAllDepartmentsTest() {
