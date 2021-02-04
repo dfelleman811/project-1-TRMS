@@ -14,7 +14,7 @@ import dev.felleman.models.Request;
 
 public interface RequestController {
 	
-	public void getRequest(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	public Request getRequest(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
 	public void getAllRequests(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	

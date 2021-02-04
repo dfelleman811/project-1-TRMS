@@ -353,21 +353,42 @@ function viewDetails(i) {
     
     //get devresid by td tag name
     let did = document.getElementById(`${i}`).cells[5].innerHTML;
-    console.log(did);
+
+    // same thing for request id
+    let rid = document.getElementById(`${i}`).cells[0].innerHTML;
+    console.log(did + "\n" + rid);
 
     let res = {
         resourceId: did
     }
 
-    //create request object
-    let xhttp = new XMLHttpRequest();
+    let req = {
+        requestId: rid
+    }
 
-    // open request
-    xhttp.open("POST", "http://localhost:8080/Project-1-TRMS/getResourceDetails.do", true);
+    let body = [res, req];
 
-    xhttp.send(JSON.stringify(res));
+    let xhttp_req = new XMLHttpRequest();
 
-    xhttp.onreadystatechange = function() {
+    xhttp_req.open("POST", "http://localhost:8080/Project-1-TRMS/getRequest.do", true);
+
+    xhttp_req.send(JSON.stringify(req));
+
+    xhttp_req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+        }
+    }
+
+    
+    //create request object for resource
+    let xhttp_res = new XMLHttpRequest();
+
+    xhttp_res.open("POST", "http://localhost:8080/Project-1-TRMS/getResourceDetails.do", true);
+
+    xhttp_res.send(JSON.stringify(res));
+
+    xhttp_res.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
         }

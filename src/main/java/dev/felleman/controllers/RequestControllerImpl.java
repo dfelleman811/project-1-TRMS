@@ -21,26 +21,20 @@ public class RequestControllerImpl implements RequestController {
 	private static Gson gson = new Gson();
 
 	@Override
-	public void getRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public Request getRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
-		String input = request.getParameter("requestId");
+		Request r = gson.fromJson(request.getReader(), Request.class);
 		
-		System.out.println(input);
+		Request req = rs.getRequest(r.getRequestId());
+		System.out.println(req);
 		
-		int id;
+		response.getWriter().append(gson.toJson(req));
 		
-		try {
-			id = Integer.parseInt(input);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			response.sendError(400, "ID paramter incorrectly formatted.");
-			return;
+		if (req != null) {
+			return req;
+		}else {
+			return null;
 		}
-		
-		Request r = rs.getRequest(id);
-		System.out.println(r);
-		
-		response.getWriter().append((r != null) ? gson.toJson(r) : "{}");
 	}
 
 	@Override

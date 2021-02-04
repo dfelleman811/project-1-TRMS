@@ -4,7 +4,7 @@
      <!-- This is the page that will display details of the selected request - and allow the supervisor to approve or request more information-->
     <title>Resource Details</title>
 </head>
-<body onload='loadResource()'>
+<body onload='loadSession()'>
 
 <h1>Development Resource Page</h1>
    
@@ -20,13 +20,14 @@ to the benco that, if the grade is passing, they should be reimbursed-->
     <option value='approved'>Approved</option>
     <option value='moreInfo'>Request More Information</option>
 </select>
+<input id='approve' type='submit' onclick='updateRequest()'>
 
 </body>
 <script>
 
-    function loadResource() {
+    function loadSession() {
 
-        // get session info
+        // get session devres info
         let xhttp = new XMLHttpRequest();
 
         xhttp.open('GET', "http://localhost:8080/Project-1-TRMS/resSession.do", true);
@@ -39,9 +40,35 @@ to the benco that, if the grade is passing, they should be reimbursed-->
                 console.log(this.responseText);
             }
         }
-        
+
+        // get session req info
+        let xhttp2 = new XMLHttpRequest();
+
+        xhttp2.open("GET", "http://localhost:8080/Project-1-TRMS/reqSession.do", true);
+
+        xhttp2.send();
+
+        xhttp2.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+            
+        }
 
 
     }
+
+
+    function updateRequest() {
+
+        // collect input
+        let newStatus = document.getElementById('approval').value;
+
+        // send post request with new status
+        let xhttp = new XMLHttpRequest();
+
+        xhttp.open("POST", "http://localhost:8080/Project-1-TRMS/")
+    }
+
 </script>
 </html>

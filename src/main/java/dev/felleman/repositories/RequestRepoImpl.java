@@ -214,7 +214,7 @@ public class RequestRepoImpl implements RequestRepo {
 		
 		try {
 			
-			String sql = "update requests set urgent = ?, status = ?";
+			String sql = "update requests set urgent = ?, status = ? where request_id = ?";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			

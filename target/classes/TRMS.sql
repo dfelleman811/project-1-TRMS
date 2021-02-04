@@ -89,7 +89,7 @@ create table requests (
 
 alter table requests modify last_updated set default current_timestamp;
 
-
+alter table requests modify constraint r_status check(status in('received', 'open', 'additional info requested','dept head approved', 'benco approved', 'pending', 'closed'
 
 create or replace trigger on_req_update
 after insert or update of urgent, status 
@@ -417,6 +417,8 @@ create table reimbursements (
     req_id number(10) --FK to request table
 );
 
+alter table reimbursements add pay_date timestamp;
+
 create sequence rem_id
 start with 1
 increment by 1;
@@ -424,28 +426,25 @@ increment by 1;
 create or replace procedure add_reimbursement(amt number, eid number, drid number, rid number)
 is
 begin
-    insert into reimbursements values (rem_id.nextval, amt, eid, drid, rid);
+    insert into reimbursements values (rem_id.nextval, amt, eid, drid, rid, current_timestamp);
 end;
 
 
 call add_reimbursement(300, 18, 3, 50);
 
 
-
-select * from reimbursements where emp_id= 18;
+update reimbursements set pay_date = current_timestamp where emp_id = 18;
+select * from reimbursements;
 
 delete reimbursements where payment_id = 1;
 
 
 
+select requests.*, employees.supervisor_id from requests left join employees on (requests.employee_id = employees.employee_id) where supervisor_id = 13;
 
 
 
-
-
-
-
-
+select * from employees;
 
 
 

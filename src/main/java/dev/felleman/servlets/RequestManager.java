@@ -21,6 +21,7 @@ import dev.felleman.controllers.RequestController;
 import dev.felleman.controllers.RequestControllerImpl;
 import dev.felleman.models.DevelopmentResource;
 import dev.felleman.models.Employee;
+import dev.felleman.models.Request;
 
 /**
  * This class is to manage incoming requests and reroute them to the proper
@@ -106,6 +107,12 @@ public class RequestManager {
 			break;
 		}
 		
+		case "/Project-1-TRMS/getRequest.do": {
+			Request r = rc.getRequest(request, response);
+			session.setAttribute("request", r);
+			break;
+		}
+		
 		case "/Project-1-TRMS/getEmpRequests.do": {
 			Employee e = (Employee) session.getAttribute("loggedInUser");
 			rc.getAllRequestsByEmployee(request, response, e);
@@ -181,6 +188,19 @@ public class RequestManager {
 		case "/Project-1-TRMS/resSession.do": {
 			DevelopmentResource d = (DevelopmentResource) session.getAttribute("resource");
 			response.getWriter().append(gson.toJson(d));
+			break;
+		}
+		
+		case "/Project-1-TRMS/reqSession.do": {
+			Request r = (Request) session.getAttribute("request");
+			System.out.println(r);
+			response.getWriter().append(gson.toJson(r));
+			break;
+		}
+		
+		case "/Project-1-TRMS/updateStatus.do": {
+			Request r = (Request) session.getAttribute(""); // I didn't save the request info - I saved the dev res info
+			rc.updateRequest(request, response);
 			break;
 		}
 		
