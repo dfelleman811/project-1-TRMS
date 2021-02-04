@@ -220,6 +220,7 @@ public class RequestRepoImpl implements RequestRepo {
 			
 			ps.setString(1, Integer.toString(reqChange.getIsUrgent()));
 			ps.setString(2, reqChange.getStatus());
+			ps.setString(3, Integer.toString(reqChange.getRequestId()));
 		
 			
 			boolean success = ps.execute();

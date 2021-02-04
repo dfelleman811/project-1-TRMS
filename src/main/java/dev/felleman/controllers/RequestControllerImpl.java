@@ -101,8 +101,11 @@ public class RequestControllerImpl implements RequestController {
 	}
 
 	@Override
-	public void updateRequest(HttpServletRequest request, HttpServletResponse response) throws JsonSyntaxException, JsonIOException, IOException {
-		Request r = gson.fromJson(request.getReader(), Request.class);
+	public void updateRequest(HttpServletRequest request, HttpServletResponse response, Request r) throws JsonSyntaxException, JsonIOException, IOException {
+		Request req = gson.fromJson(request.getReader(), Request.class);
+		
+		// Set session request to request body's updatedStatus
+		r.setStatus(req.getStatus());
 		
 		rs.updateRequest(r);
 		

@@ -145,6 +145,11 @@ public class RequestManager {
 			break;
 		}
 		
+		case "/Project-1-TRMS/getAllReimbursements.do": {
+			rbs.getAllReimbursements(request, response);
+			break;
+		}
+		
 		case "/Project-1-TRMS/getDepartment.do": {
 			System.out.println("getting department");
 			dc.getDepartment(request, response);
@@ -199,8 +204,8 @@ public class RequestManager {
 		}
 		
 		case "/Project-1-TRMS/updateStatus.do": {
-			Request r = (Request) session.getAttribute(""); // I didn't save the request info - I saved the dev res info
-			rc.updateRequest(request, response);
+			Request r = (Request) session.getAttribute("request"); // I didn't save the request info - I saved the dev res info
+			rc.updateRequest(request, response, r);
 			break;
 		}
 		

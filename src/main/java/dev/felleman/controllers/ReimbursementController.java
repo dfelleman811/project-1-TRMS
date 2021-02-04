@@ -13,7 +13,7 @@ public interface ReimbursementController {
 	
 	public Reimbursement getReimbursement(HttpServletRequest request, HttpServletResponse response);
 	
-	public List<Reimbursement> getAllReimbursements(HttpServletRequest request, HttpServletResponse response);
+	public List<Reimbursement> getAllReimbursements(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
 	public List<Reimbursement> getAllReimbursementsByEmployee(HttpServletRequest request, HttpServletResponse response, Employee e) throws IOException;
 	

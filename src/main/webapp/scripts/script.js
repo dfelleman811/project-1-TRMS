@@ -106,9 +106,24 @@ function loadDeptHead() {
 
 function loadBenCo() {
     // if benco
-        //eveerything a dept head can do plus..
+        //everything a dept head can do plus..
         // review all requests
-        // view all reimbursements
+       
+    
+    let navDiv = document.getElementById('navBar');
+    let allRequestsButton = document.createElement('li');
+    allRequestsButton.setAttribute('id', 'allRequests');
+    allRequestsButton.setAttribute('onclick','getAllRequests()');
+    allRequestsButton.innerHTML = "View All Requests";
+
+    navDiv.append(allRequestsButton);
+
+    // view all reimbursements
+    let bencoButton = document.createElement('li');
+    bencoButton.setAttribute('id', 'allReimbursements');
+    bencoButton.setAttribute('onclick', 'getAllReimbursements()')
+    bencoButton.innerHTML = "View All Reimbursements";
+    navDiv.append(bencoButton);
 }
 
 
@@ -287,6 +302,41 @@ function getEmpReimbursements() {
 
     xhttp.onreadystatechange = function() {
 
+        if (this.readyState == 4 && this.status == 200) {
+            // get json of request objects
+            let reqList = this.responseText;
+
+            // parse to list
+            parsedReqList = JSON.parse(reqList);
+
+            //verify
+            console.log(parsedReqList)
+
+            //make sure response isn't empty
+            if (parsedReqList.length == 0) {
+                //print message saying no requests
+                // get placeholder table
+                let pholder = document.getElementById('resultTables').lastChild;
+                // create p element
+                let message = document.createElement('p').innerHTML = "There are no results to display. Please choose another option."
+                pholder.replaceWith(message);
+            }else{
+                setUpTable(parsedReqList);
+            }
+        }
+    }
+
+}
+
+function getAllReimbursements() {
+
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.open("GET", "http://localhost:8080/Project-1-TRMS/getAllReimbursements.do", true);
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             // get json of request objects
             let reqList = this.responseText;

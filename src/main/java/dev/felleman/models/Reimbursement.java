@@ -7,6 +7,7 @@ public class Reimbursement {
 	private int empId;
 	private int devResId;
 	private int reqId;
+	private String payDate;
 	
 	
 	public Reimbursement() {
@@ -82,11 +83,18 @@ public class Reimbursement {
 		this.reqId = reqId;
 	}
 
+	public String getPayDate() {
+		return this.payDate;
+	}
+	
+	public void setPayDate(String payDate) {
+		this.payDate = payDate;
+	}
 
 	@Override
 	public String toString() {
 		return "Reimbursement [paymentId=" + this.paymentId + ", amount=" + this.amount + ", empId=" + this.empId + ", devResId="
-				+ this.devResId + ", reqId=" + this.reqId + "]";
+				+ this.devResId + ", reqId=" + this.reqId + ", payDate=" + this.payDate + "]";
 	}
 
 	@Override

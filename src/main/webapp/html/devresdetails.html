@@ -8,8 +8,8 @@
 
 <h1>Development Resource Page</h1>
    
-
-    
+<!-- Div to call when print details to page -->
+<div id='details'></div>
 
 <!-- When a request has been given a grade by the employee, there should automatically generate a notice
 to the benco that, if the grade is passing, they should be reimbursed-->
@@ -17,8 +17,8 @@ to the benco that, if the grade is passing, they should be reimbursed-->
 <label for='approval'>FOR DEPT HEAD:</label>
 <select id='approval' value='selectOne' required>
     <option value='selectOne'>-- Select One --</option>
-    <option value='approved'>Approved</option>
-    <option value='moreInfo'>Request More Information</option>
+    <option value='dept head approved'>Approved</option>
+    <option value='additional info requested'>Request More Information</option>
 </select>
 <input id='approve' type='submit' onclick='updateRequest()'>
 
@@ -38,14 +38,48 @@ to the benco that, if the grade is passing, they should be reimbursed-->
 
             if (this.readyState == 4 && this.status == 200) {
                 console.log(this.responseText);
+
+                // parse and check to make sure it isn't empty
+                let parsedResponse = JSON.parse(this.responseText);
+
+                if (parsedResponse.length == 0) {
+                    //print message saying that there's no details
+                    let detailsDiv = document.getElementById('details');
+                    let message = document.createElement('p').innerHTML = "There are no details to display";
+                    detailsDiv.append(message);
+                }else{
+                    //print all of this to the page!!! Let's make this a function
+                    printDetails(parsedResponse);
+                }
+                
+
             }
         }
-
-        
-
-
     }
 
+
+    function printDetails(parsedResponse) {
+        // get place holder div
+        let detailsDiv = document.getElementById('details');
+        
+        // heading for each detail
+        let headers = ['Reource ID', 'Start Date', 'Time', 'Location', 'Cost', 'Type', 'Description', 'Justification']
+        for (head in header) {
+            let dhead = document.createElement('h3').innerHTML = header[head];
+            dhead.setAttribute('id', `${head}`);
+            detailsDiv.append(dhead)
+        }
+        // for now just make paragraphs to make sure it works
+        for (thing in parsedResponse) {
+            // inner html for info
+            let deats = document.createElement('p');
+            deats.innerHTML = `${parsedResponse[thing]}`;
+            
+            // add to appropriate header
+            let sec = document.getElementById('')
+        }
+
+    }
 
     function updateRequest() {
 

@@ -25,8 +25,10 @@ public class ReimbursementControllerImpl implements ReimbursementController {
 	}
 
 	@Override
-	public List<Reimbursement> getAllReimbursements(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	public List<Reimbursement> getAllReimbursements(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		List<Reimbursement> allRems = rs.getAllReimbursements();
+		
+		response.getWriter().append(gson.toJson(allRems));
 		return null;
 	}
 
