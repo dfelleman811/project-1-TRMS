@@ -373,7 +373,7 @@ function viewDetails(i) {
         }
 
     }
-    //window.location.href='http://localhost:8080/Project-1-TRMS/html/devresdetails.html';
+    window.location.href='http://localhost:8080/Project-1-TRMS/html/devresdetails.html';
 }
 
 function logout() {
