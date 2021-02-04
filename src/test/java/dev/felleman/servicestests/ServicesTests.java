@@ -8,11 +8,14 @@ import org.junit.Test;
 
 import dev.felleman.models.Department;
 import dev.felleman.models.Employee;
+import dev.felleman.models.Reimbursement;
 import dev.felleman.models.Request;
 import dev.felleman.services.DepartmentServices;
 import dev.felleman.services.DepartmentServicesImpl;
 import dev.felleman.services.EmployeeServices;
 import dev.felleman.services.EmployeeServicesImpl;
+import dev.felleman.services.ReimbursementServices;
+import dev.felleman.services.ReimbursementServicesImpl;
 import dev.felleman.services.RequestServices;
 import dev.felleman.services.RequestServicesImpl;
 
@@ -30,6 +33,8 @@ public class ServicesTests {
 	public RequestServices rs = new RequestServicesImpl();
 	
 	public DepartmentServices ds = new DepartmentServicesImpl();
+	
+	public ReimbursementServices rbs = new ReimbursementServicesImpl();
 	
 	@Test
 	public void getEmployeeByEmailTest() {
@@ -98,6 +103,23 @@ public class ServicesTests {
 		
 	}
 	
+	@Test
+	public void getAllReimbursementsByEmployeeTest() {
+		
+		
+		List<Reimbursement> remList = new ArrayList<Reimbursement>();
+		
+		Reimbursement r = new Reimbursement(2, 300,	18,	3,	50);
+		Reimbursement r1 = new Reimbursement(3, 300, 18, 3,	50);
+		Reimbursement r2 = new Reimbursement(4, 300, 18, 3,	50);
+		
+		remList.add(r);
+		remList.add(r1);
+		remList.add(r2);
+		
+		Assert.assertEquals(remList, rbs.getAllReimbursementsByEmployee(18));
+		
+	}
 	
 	
 }

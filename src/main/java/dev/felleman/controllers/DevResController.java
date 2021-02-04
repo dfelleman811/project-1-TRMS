@@ -10,7 +10,7 @@ import dev.felleman.models.DevelopmentResource;
 
 public interface DevResController {
 	
-	public void getResource(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	public DevelopmentResource getResource(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
 	public void getAllResources(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	

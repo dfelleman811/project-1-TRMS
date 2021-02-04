@@ -151,6 +151,40 @@ public class RequestRepoImpl implements RequestRepo {
 		}
 		return null;
 	}
+	
+	@Override
+	public List<Request> getAllDeptRequests(int superId) {
+		List<Request> reqList = new ArrayList<Request>();
+		
+		try {
+	
+			String sql = "select requests.*, employees.supervisor_id from requests left join employees on (requests.employee_id = employees.employee_id) where supervisor_id = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, Integer.toString(superId));
+			
+			ResultSet rs = ps.executeQuery();
+		
+			while (rs.next()) {
+				Request r = new Request();
+				
+				r.setRequestId(rs.getInt("request_id"));
+				r.setSubmitDate(rs.getDate("submit_date"));
+				r.setIsUrgent(rs.getInt("urgent"));
+				r.setStatus(rs.getString("status"));
+				r.setEmployeeId(rs.getInt("employee_id"));
+				r.setDevResource(rs.getInt("development_resource"));
+				
+				reqList.add(r);
+			}
+			return reqList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public boolean addRequest(int employeeId, int urgency) {
@@ -219,5 +253,7 @@ public class RequestRepoImpl implements RequestRepo {
 		}
 		return false;
 	}
+
+	
 
 }

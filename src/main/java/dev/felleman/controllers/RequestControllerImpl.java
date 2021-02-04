@@ -56,17 +56,7 @@ public class RequestControllerImpl implements RequestController {
 		int id = e.getEmployeeId();
 		
 		System.out.println(id);
-		
-//		int id;
-//		
-//		try {
-//			id = Integer.parseInt(input);
-//		} catch (NumberFormatException ex) {
-//			ex.printStackTrace();
-//			response.sendError(400, "ID paramter incorrectly formatted.");
-//			return;
-//		}
-		
+
 		List<Request> reqList = rs.getAllRequestsByEmployee(id);
 		System.out.println(reqList);
 		
@@ -93,6 +83,16 @@ public class RequestControllerImpl implements RequestController {
 		System.out.println(reqList);
 		
 		response.getWriter().append(gson.toJson(reqList));
+	}
+	
+	@Override
+	public void getAllRequestsByDept(HttpServletRequest request, HttpServletResponse response, Employee e) throws JsonSyntaxException, JsonIOException, IOException {
+		int superId = e.getEmployeeId();
+		
+		List<Request> reqList= rs.getAllDeptRequests(superId);
+		
+		response.getWriter().append(gson.toJson(reqList));
+		
 	}
 
 	@Override
@@ -124,5 +124,7 @@ public class RequestControllerImpl implements RequestController {
 		response.getWriter().append("Request Deleted");
 		
 	}
+
+	
 
 }

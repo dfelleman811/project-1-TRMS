@@ -93,16 +93,14 @@ function loadDeptHead() {
         // review requests that need approval in their department
             // if they're waiting on benco and no approval in time frame they can alert
         // can view departments requests status reimbursements etc
-    let buttonDiv = document.getElementById('buttons');
+    let navDiv = document.getElementById('navBar');
 
-    let allRequestsButton = document.createElement('div');
+    let allRequestsButton = document.createElement('li');
     allRequestsButton.setAttribute('id', 'allRequests');
-    allRequestsButton.setAttribute('onclick','getAllRequests()');
+    allRequestsButton.setAttribute('onclick','getAllDepartmentRequests()');
     allRequestsButton.innerHTML = "View All Department Requests";
 
-    buttonDiv.append(allRequestsButton);
-
-
+    navDiv.append(allRequestsButton);
     
 }
 
@@ -116,8 +114,8 @@ function loadBenCo() {
 
 
 // event listener for view requests statuses
-let viewStatus = document.getElementById('viewRequests');
-document.addEventListener("click", getEmpRequests);
+// let viewStatus = document.getElementById('viewRequests');
+// viewStatus.addEventListener("click", getEmpRequests);
 
 
 function createRequest() {
@@ -125,10 +123,6 @@ function createRequest() {
 }
 
 function getEmpRequests() {
-    // stop page from reloading?
-
-    // get employee id from session
-    // let id = sessionObj.employeeId;
 
     // get request
     let xhttp = new XMLHttpRequest();
@@ -140,12 +134,68 @@ function getEmpRequests() {
     xhttp.onreadystatechange = function() {
 
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+            // get json of request objects
+            let responseList = this.responseText;
+
+            // parse to list
+            parsedResponseList = JSON.parse(responseList);
+
+            //verify
+            console.log(parsedResponseList)
+
+            //make sure response isn't empty
+            if (parsedResponseList.length == 0) {
+                //print message saying no requests
+                // get placeholder table
+                let pholder = document.getElementById('resultTables').lastChild;
+                // create p element
+                let message = document.createElement('p').innerHTML = "There are no results to display. Please choose another option."
+                pholder.replaceWith(message);
+            }else{
+                setUpTable(parsedResponseList);
+            }
         }
     }
 
 }
 
+function getAllDepartmentRequests() {
+
+    // get request
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.open("GET", "http://localhost:8080/Project-1-TRMS/getAllDeptRequests.do", true);
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+            // get json of request objects
+            let responseList = this.responseText;
+
+            // parse to list
+            parsedResponseList = JSON.parse(responseList);
+
+            //verify
+            console.log(parsedResponseList)
+
+            //make sure response isn't empty
+            if (parsedResponseList.length == 0) {
+                //print message saying no requests
+                // get placeholder table
+                let pholder = document.getElementById('resultTables').lastChild;
+                // create p element
+                let message = document.createElement('p').innerHTML = "There are no results to display. Please choose another option."
+                pholder.replaceWith(message);
+            }else{
+                setUpTable(parsedResponseList);
+            }
+        }
+    }
+
+
+}
 function getAllRequests() {
 
             
@@ -159,45 +209,124 @@ function getAllRequests() {
     xhttp.onreadystatechange = function() {
 
         if (this.readyState == 4 && this.status == 200) {
+            // get json of request objects
             let reqList = this.responseText;
 
-            let body = document.getElementById('body');
-            let newDiv = document.createElement("div");
-            
+            // parse to list
             parsedReqList = JSON.parse(reqList);
 
+            //verify
             console.log(parsedReqList)
 
-            parsedReqList.forEach(req => {
-                printToTable(req);
-            }); 
-            
-            //newDiv.innerHTML = ;
-
-
-
-            //body.append(newDiv);
-
-
-
+            //make sure response isn't empty
+            if (parsedReqList.length == 0) {
+                //print message saying no requests
+                // get placeholder table
+                let pholder = document.getElementById('resultTables').lastChild;
+                // create p element
+                let message = document.createElement('p').innerHTML = "There are no results to display. Please choose another option."
+                pholder.replaceWith(message);
+            }else{
+                setUpTable(parsedReqList);
+            }
         }
     }
 }
 
-function printToTable(req) {
+function setUpTable(parsedReqList) {
 
-    // get empty table
-    let table = document.getElementById('requestsTable');
 
+        // set up table
+        // create list for table head names
+        let theaders = [];
+        
+        // get headers based on type of response
+        
+        if (Object.keys(parsedReqList[0])[0] == 'requestId') {
+            theaders = ['Request ID', 'Submit Date', 'Urgent', 'Status', 'Employee ID', 'Development Resources', 'Actions'];
+        } else {
+            theaders = ['Payment ID', 'Paid Amount', 'Pay Date','Employee ID', 'Resource ID', 'Request ID'];
+        }
+        // create empty table
+        let table = document.createElement('table');
+        table.setAttribute('id', 'newResultTable');
+
+        //create header row
+        let hrow = document.createElement('tr');
+        hrow.setAttribute('id', 'headers');
+
+        // loop through headers list and create ths
+        for (header in theaders) {
+            let hname = document.createElement('th');
+            hname.innerHTML = theaders[header];
+            hrow.append(hname);
+        }
+        
+        // add header row table
+        table.append(hrow);
+
+        // add table to page by replacing anytable there already table
+        let oldTable = document.getElementById('resultTables').lastChild;
+        oldTable.replaceWith(table)
+        
+
+        // loop through returned list of requests objects and add to table via function
+        let i = 0;
+        parsedReqList.forEach(req => {
+            printToTable(req, i++);
+        }); 
+
+}
+function getEmpReimbursements() {
+
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.open("GET", "http://localhost:8080/Project-1-TRMS/getEmpReimbursements.do", true);
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+            // get json of request objects
+            let reqList = this.responseText;
+
+            // parse to list
+            parsedReqList = JSON.parse(reqList);
+
+            //verify
+            console.log(parsedReqList)
+
+            //make sure response isn't empty
+            if (parsedReqList.length == 0) {
+                //print message saying no requests
+                // get placeholder table
+                let pholder = document.getElementById('resultTables').lastChild;
+                // create p element
+                let message = document.createElement('p').innerHTML = "There are no results to display. Please choose another option."
+                pholder.replaceWith(message);
+            }else{
+                setUpTable(parsedReqList);
+            }
+        }
+    }
+
+}
+
+function printToTable(req, i) {
+
+    // get table by id
+    let t = document.getElementById('newResultTable');
     // create new row and set attributes
     let newRow = document.createElement('tr');
-    newRow.setAttribute('id', `${req.requestId}`);
+    
+    newRow.setAttribute('id', `${i}`);
 
     // loop through each returned request and set as table data in row
     for (key in req) {
         // create td
         let newData= document.createElement('td');
-        newData.setAttribute('class', `${req}`)
+        newData.setAttribute('name', `${key}`)
 
         // set inner html of td
         newData.innerHTML= `${req[key]}`;
@@ -206,16 +335,45 @@ function printToTable(req) {
         newRow.append(newData);
 
         // add to table
-        table.append(newRow);
+        t.append(newRow);
+    }
+    // and add a link for viewing the details
+    let viewLink = document.createElement('td');
+    viewLink.setAttribute('name', `${i}`)
+    viewLink.setAttribute('onclick', `viewDetails(${i})`);
+    viewLink.innerHTML = 'View Details';
+
+    newRow.append(viewLink);
+}
+
+function viewDetails(i) {
+
+    // how do we get this info and put it on the new page?
+    // put into request body of a post and have the session set a new attribute?
+    
+    //get devresid by td tag name
+    let did = document.getElementById(`${i}`).cells[5].innerHTML;
+    console.log(did);
+
+    let res = {
+        resourceId: did
     }
 
-  
+    //create request object
+    let xhttp = new XMLHttpRequest();
 
-    
-    // new table row
-    // let table  = document.getElementById('openRequestsTable');
-    
-    // document.createElement('tr');
+    // open request
+    xhttp.open("POST", "http://localhost:8080/Project-1-TRMS/getResourceDetails.do", true);
+
+    xhttp.send(JSON.stringify(res));
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+        }
+
+    }
+    //window.location.href='http://localhost:8080/Project-1-TRMS/html/devresdetails.html';
 }
 
 function logout() {

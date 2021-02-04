@@ -1,11 +1,29 @@
 #navBar {
     list-style-type:none; 
     margin:0; 
-    padding:0;
+    padding:1em;
+    color: white;
     background-color: grey;
     width: 25%;
 }
 
 #navBar :hover {
     background-color: orange;
+}
+
+#logout {
+    list-style-type: none;
+    float: right;
+    margin: 0;
+    padding: 1em;
+    color:white;
+    background-color: grey;
+}
+
+#logout :hover {
+    background-color: orange;
+}
+
+ul li {
+    padding: 1em;
 }

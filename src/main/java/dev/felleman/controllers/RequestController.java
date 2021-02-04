@@ -22,6 +22,8 @@ public interface RequestController {
 	
 	public void getAllRequestsByStatus(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
+	public void getAllRequestsByDept(HttpServletRequest request, HttpServletResponse response, Employee e) throws JsonSyntaxException, JsonIOException, IOException;
+	
 	public void addRequest(HttpServletRequest request, HttpServletResponse response, Employee e) throws JsonSyntaxException, JsonIOException, IOException;
 	
 	public void updateRequest(HttpServletRequest request, HttpServletResponse response) throws JsonSyntaxException, JsonIOException, IOException;

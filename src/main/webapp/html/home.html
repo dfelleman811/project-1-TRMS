@@ -5,54 +5,47 @@
     <link rel='stylesheet' href='../styles/homestyle.css' type='text/css'>
 </head>
 <body id='body' onload='onHomePageLoad()'>
-    <h1>Welcome to the Home Page. Select an option below to continue</h1>
+    <h1>Welcome to the Home Page.</h1>
 
 
-    
+    <!-- Log Out Button-->
+    <ul id='logout' onclick='logout()'><li>Log Out</li></ul>
 
     <br/><br/>
+
     <!-- Navigation side bar-->
-    
     <ul id='navBar'>
 
         <li><a href='newRequest.html'>Submit New Request</a></li>
-        <li><p onclick='getEmpRequests'>View Requests Statuses</p></li>
-        <li><p>View All Requests</p></li>
-        <li><p>Log Out</p></li>
+        <li onclick='getEmpRequests()'>View Requests Statuses</li>
+        <li onclick='getEmpReimbursements()'>View Reimbursements</li>
+        <!-- <li>View All Requests</li> should only be viewable for dept heads and benco -->
+        
 
     </ul>
 
-    <div id='buttons'>
+   
+
+    <!-- <div id='buttons'>
 
         <div id='newRequest' onclick='createRequest()'>Submit New Request</div>
 
         <br/><br/>
-        <div id='viewRequests'>View Your Request Statuses</div>
+        <div id='viewRequests'>View Your Request Statuses</div> -->
 
         <!-- <br/><br/> -->
         <!-- <div id="requests" onclick='getAllRequests()'>See All Requests</div> -->
 
         <br/><br/><br/><br/>
 
-        <table id='requestsTable'>
-
-            <tr>
-                <th>Request ID</th>
-                <th>Submit Date</th>
-                <th>Urgent</th>
-                <th>Status</th>
-                <th>Employee ID</th>
-                <th>Development Resource</th>
-            </tr>
-
-
-        </table>
-
-
+    
+        <div id='resultTables'>
+            <table id='resultTable'></table>
+        </div>
 
 
         <br/><br/>
-        <div id='logout' onclick='logout()'>Log Out</div>
+       
         
     </div>
     

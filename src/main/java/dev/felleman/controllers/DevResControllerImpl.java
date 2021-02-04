@@ -18,25 +18,15 @@ public class DevResControllerImpl implements DevResController {
 	public Gson gson = new Gson();
 
 	@Override
-	public void getResource(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public DevelopmentResource getResource(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
-		String input = request.getParameter("resourceId");
+		DevelopmentResource d = gson.fromJson(request.getReader(), DevelopmentResource.class);
 		
-		int id;
+		d = drs.getResource(d.getResourceId());
 		
-		try {
-			
-			id = Integer.parseInt(input);
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			response.sendError(400, "ID parameter imporperly formatted.");
-			return;
-		}
+		response.getWriter().append((d != null) ? gson.toJson(d) : "{}");
 		
-		DevelopmentResource dr = drs.getResource(id);
-		
-		response.getWriter().append((dr != null) ? gson.toJson(dr) : "{}");
-
+		return d;
 	}
 
 	@Override

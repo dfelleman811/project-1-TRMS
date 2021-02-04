@@ -199,8 +199,8 @@ create table development_resources (
     attachments blob -- think I need to link this to another table?
 );
 
-alter table development_resources modify start_date date;
-alter table development_resources modify resource_time timestamp;
+alter table development_resources modify start_date varchar2(20);
+alter table development_resources modify resource_time varchar2(20);
 
 alter table development_resources rename column grading_format_id to grading_format;
 alter table development_resources modify grading_format varchar2(20);
@@ -395,7 +395,7 @@ select dev_res_id_seq.currval from dual;
 
 call add_dev_resource('02-FEB-2021', '02-JAN-21 09:00:00.00', 'School', 300, 'letter grade', 'course', 'management', 'improvement');
 
-insert into development_resources values (49, null, '9:00 AM', 'general assembly', 300, 'none/presentation', 'workshop', 'workshop', 'worth it');
+insert into development_resources values (49, '2021-03-23', '9:00 AM', 'general assembly', 300, 'none/presentation', 'workshop', 'workshop', 'worth it');
 
 delete development_resources where resource_id=49;
 
@@ -416,3 +416,42 @@ create table reimbursements (
     devres_id number(10), -- FK to devres table
     req_id number(10) --FK to request table
 );
+
+create sequence rem_id
+start with 1
+increment by 1;
+
+create or replace procedure add_reimbursement(amt number, eid number, drid number, rid number)
+is
+begin
+    insert into reimbursements values (rem_id.nextval, amt, eid, drid, rid);
+end;
+
+
+call add_reimbursement(300, 18, 3, 50);
+
+
+
+select * from reimbursements where emp_id= 18;
+
+delete reimbursements where payment_id = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

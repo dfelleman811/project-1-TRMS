@@ -1,14 +1,13 @@
 package dev.felleman.servlets;
 
-import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.Enumeration;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import dev.felleman.controllers.DeptController;
 import dev.felleman.controllers.DeptControllerImpl;
@@ -16,8 +15,11 @@ import dev.felleman.controllers.DevResController;
 import dev.felleman.controllers.DevResControllerImpl;
 import dev.felleman.controllers.EmployeeController;
 import dev.felleman.controllers.EmployeeControllerImpl;
+import dev.felleman.controllers.ReimbursementController;
+import dev.felleman.controllers.ReimbursementControllerImpl;
 import dev.felleman.controllers.RequestController;
 import dev.felleman.controllers.RequestControllerImpl;
+import dev.felleman.models.DevelopmentResource;
 import dev.felleman.models.Employee;
 
 /**
@@ -36,6 +38,7 @@ public class RequestManager {
 	public RequestController rc = new RequestControllerImpl();
 	public DeptController dc = new DeptControllerImpl();
 	public DevResController drs = new DevResControllerImpl();
+	public ReimbursementController rbs = new ReimbursementControllerImpl();
 	
 	public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
@@ -115,10 +118,23 @@ public class RequestManager {
 			break;
 		}
 		
+		case "/Project-1-TRMS/getAllDeptRequests.do": {
+			System.out.println("get all dept requests case");
+			Employee e = (Employee) session.getAttribute("loggedInUser");
+			rc.getAllRequestsByDept(request, response, e);
+			break;
+		}
+		
 		case "/Project-1-TRMS/addRequest.do": {
 			System.out.println("adding request");
 			Employee e = (Employee) session.getAttribute("loggedInUser");
 			rc.addRequest(request, response, e);
+			break;
+		}
+		
+		case "/Project-1-TRMS/getEmpReimbursements.do": {
+			Employee e = (Employee) session.getAttribute("loggedInUser");
+			rbs.getAllReimbursementsByEmployee(request, response, e);
 			break;
 		}
 		
@@ -153,6 +169,18 @@ public class RequestManager {
 		case "/Project-1-TRMS/addDevRes.do": {
 			System.out.println("adding resource");
 			drs.addDevelopmentResource(request, response);
+			break;
+		}
+		
+		case "/Project-1-TRMS/getResourceDetails.do": {
+			DevelopmentResource d = drs.getResource(request, response);;
+			session.setAttribute("resource", d);
+			break;
+		}
+		
+		case "/Project-1-TRMS/resSession.do": {
+			DevelopmentResource d = (DevelopmentResource) session.getAttribute("resource");
+			response.getWriter().append(gson.toJson(d));
 			break;
 		}
 		

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Requests</title>
+    <title>Resource Details</title>
 </head>
-<body>
+<body onload='loadResource'>
 
 
-    <!-- This is the page that will display the current session user's requests (open?)-->
+    <!-- This is the page that will display details of the selected request)-->
 
     
 
@@ -40,4 +40,26 @@ to the benco that, if the grade is passing, they should be reimbursed-->
 
 
 </body>
+<script>
+
+    function loadResource() {
+
+        // get session info
+        let xhttp = new XMLHttpRequest();
+
+        xhttp.open('GET', "http://localhost:8080/Project-1-TRMS/resSession.do", true);
+
+        xhttp.send();
+
+        xhttp.onreadystatechange = function() {
+
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+        }
+        
+
+
+    }
+</script>
 </html>

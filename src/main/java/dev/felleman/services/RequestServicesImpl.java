@@ -29,6 +29,11 @@ public class RequestServicesImpl implements RequestServices {
 	public List<Request> getAllRequestsByStatus(String status) {
 		return rr.getAllRequestsByStatus(status);
 	}
+	
+	@Override
+	public List<Request> getAllDeptRequests(int superId) {
+		return rr.getAllDeptRequests(superId);
+	}
 
 	@Override
 	public boolean addRequest(int employeeId, int urgency) {
