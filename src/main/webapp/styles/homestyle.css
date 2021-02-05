@@ -31,3 +31,9 @@ body {
 ul li {
     padding: 1em;
 } */
+html {
+   size: 100%;
+}
+ body {
+    margin: 20% 20%;
+ }

@@ -3,11 +3,13 @@
 <head>
      <!-- This is the page that will display details of the selected request - and allow the supervisor to approve or request more information-->
     <title>Resource Details</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="../styles/homestyle.css"> -->
 </head>
-<body onload='loadSession()'>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body class="m-5 pb-5 bg-info" onload='loadSession()'>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">TRMS</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +28,7 @@
                   Requests
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="newRequest.html">Submit New Request</a></li>
+                  <li><a class="dropdown-item" href="http://localhost:8080/Project-1-TRMS/html/newRequest.html">Submit New Request</a></li>
                   <li><a class="dropdown-item" onclick='getEmpRequests()'>View Request Status</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="#" onclick='getEmpReimbursements()'>View Remibursements</a></li>
@@ -57,17 +59,18 @@
     <br/><br/><br/>
     <!-- When a request has been given a grade by the employee, there should automatically generate a notice
     to the benco that, if the grade is passing, they should be reimbursed-->
-    <div id='hidden' visibility='hidden'>
-    <label for='approval'>FOR DEPT HEAD:</label>
+    <div id='hidden' class='invisible'>
+    <label for='approval'>FOR DEPT HEAD / BENCO:</label>
     <select id='approval' value='selectOne'>
         <option value='selectOne'>-- Select One --</option>
-        <option value='dept head approved'>Approved</option>
+        <option value='dept head approved'>Dept Head Approved</option>
+        <option value='benco approved'>Benco Approved</option>
         <option value='additional info requested'>Request More Information</option>
     </select>
     <input id='approve' type='submit' onclick='updateRequest()'>
     </div>
 
-    <div id='grade'>
+    <div id='grade' class='invisible'>
         <label for='gradeSubmit'></label>
         <select id='grades' value='selectOne'>
             <option value='selectOne'>-- Select One --</option>
@@ -103,15 +106,15 @@
                 // check type of employee
                 if (sessionObj.lastName.toLowerCase() == 'departmenthead') {
                     // make buttons visible
-                    document.getElementById('hidden').setAttribute('visibility', 'visible');
+                    document.getElementById('hidden').setAttribute('class', 'visible');
                 }
                 
                 else if (sessionObj.firstName.toLowerCase() == 'benco') {
-                    document.getElementById('hidden').setAttribute('visibility', 'visible');
+                    document.getElementById('hidden').setAttribute('class', 'visible');
                 }
 
                 else {
-                    document.getElementById('hidden').setAttribute('visibility', 'hidden');
+                    document.getElementById('grade').setAttribute('class', 'visible');
                 }
 
             }
@@ -235,4 +238,5 @@
         window.location.href="http://localhost:8080/Project-1-TRMS/html/home.html";
     }
 </script>
+<script src="../scripts/script.js"></script>
 </html>

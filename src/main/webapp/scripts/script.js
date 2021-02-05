@@ -93,10 +93,11 @@ function loadDeptHead() {
         // review requests that need approval in their department
             // if they're waiting on benco and no approval in time frame they can alert
         // can view departments requests status reimbursements etc
-    let navDiv = document.getElementById('navBar');
+    let navDiv = document.getElementById('dropdown');
 
     let allRequestsButton = document.createElement('li');
     allRequestsButton.setAttribute('id', 'allRequests');
+    allRequestsButton.setAttribute('class', 'dropdown-item')
     allRequestsButton.setAttribute('onclick','getAllDepartmentRequests()');
     allRequestsButton.innerHTML = "View All Department Requests";
 
@@ -110,9 +111,10 @@ function loadBenCo() {
         // review all requests
        
     
-    let navDiv = document.getElementById('navBar');
+    let navDiv = document.getElementById('dropdown');
     let allRequestsButton = document.createElement('li');
     allRequestsButton.setAttribute('id', 'allRequests');
+    allRequestsButton.setAttribute('class', 'dropdown-item');
     allRequestsButton.setAttribute('onclick','getAllRequests()');
     allRequestsButton.innerHTML = "View All Requests";
 
@@ -121,6 +123,7 @@ function loadBenCo() {
     // view all reimbursements
     let bencoButton = document.createElement('li');
     bencoButton.setAttribute('id', 'allReimbursements');
+    bencoButton.setAttribute('class', 'dropdown-item')
     bencoButton.setAttribute('onclick', 'getAllReimbursements()')
     bencoButton.innerHTML = "View All Reimbursements";
     navDiv.append(bencoButton);
@@ -265,7 +268,7 @@ function setUpTable(parsedReqList) {
         // create empty table
         let table = document.createElement('table');
         table.setAttribute('id', 'newResultTable');
-        table.setAttribute('class', 'table table-hover table-light')
+        table.setAttribute('class', 'table table-dark table-hover')
 
         //create header row
         let hrow = document.createElement('tr');
@@ -274,7 +277,7 @@ function setUpTable(parsedReqList) {
         // loop through headers list and create ths
         for (header in theaders) {
             let hname = document.createElement('th');
-            hname.setAttribute('scope', 'column');
+            // hname.setAttribute('scope', 'column');
             hname.innerHTML = theaders[header];
             hrow.append(hname);
         }
