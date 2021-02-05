@@ -265,6 +265,7 @@ function setUpTable(parsedReqList) {
         // create empty table
         let table = document.createElement('table');
         table.setAttribute('id', 'newResultTable');
+        table.setAttribute('class', 'table table-hover table-light')
 
         //create header row
         let hrow = document.createElement('tr');
@@ -273,6 +274,7 @@ function setUpTable(parsedReqList) {
         // loop through headers list and create ths
         for (header in theaders) {
             let hname = document.createElement('th');
+            hname.setAttribute('scope', 'column');
             hname.innerHTML = theaders[header];
             hrow.append(hname);
         }
@@ -390,6 +392,7 @@ function printToTable(req, i) {
     // and add a link for viewing the details
     let viewLink = document.createElement('td');
     viewLink.setAttribute('name', `${i}`)
+    viewLink.setAttribute('class', 'table-info')
     viewLink.setAttribute('onclick', `viewDetails(${i})`);
     viewLink.innerHTML = 'View Details';
 

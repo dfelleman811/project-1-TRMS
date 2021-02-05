@@ -1,7 +1,7 @@
-#navBar {
+/* #navBar {
     list-style-type:none; 
     margin:0; 
-    padding:1em;
+    padding:0;
     color: white;
     background-color: grey;
     width: 25%;
@@ -11,11 +11,15 @@
     background-color: orange;
 }
 
+body {
+    margin: 20% 20%;
+}
+
 #logout {
     list-style-type: none;
     float: right;
     margin: 0;
-    padding: 1em;
+    padding: 0;
     color:white;
     background-color: grey;
 }
@@ -26,4 +30,4 @@
 
 ul li {
     padding: 1em;
-}
+} */

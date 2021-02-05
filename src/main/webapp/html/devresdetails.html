@@ -3,29 +3,119 @@
 <head>
      <!-- This is the page that will display details of the selected request - and allow the supervisor to approve or request more information-->
     <title>Resource Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="../styles/homestyle.css"> -->
 </head>
 <body onload='loadSession()'>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">TRMS</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="http://localhost:8080/Project-1-TRMS/html/home.html">Home</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="newRequest.html">Submit New Request</a>
+              </li> -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Requests
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="newRequest.html">Submit New Request</a></li>
+                  <li><a class="dropdown-item" onclick='getEmpRequests()'>View Request Status</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#" onclick='getEmpReimbursements()'>View Remibursements</a></li>
+                </ul>
+                <li class="nav-item">
+                    <a class='nav-link active' onclick='logout()'>Log Out</a>
+                </li>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+      </nav>
 
-<h1>Development Resource Page</h1>
-   
-<!-- Div to call when print details to page -->
-<div id='details'></div>
+     <!-- Log Out Button-->
+     <ul id='logout' onclick='logout()'><li>Log Out</li></ul>
 
-<!-- When a request has been given a grade by the employee, there should automatically generate a notice
-to the benco that, if the grade is passing, they should be reimbursed-->
 
-<label for='approval'>FOR DEPT HEAD:</label>
-<select id='approval' value='selectOne' required>
-    <option value='selectOne'>-- Select One --</option>
-    <option value='dept head approved'>Approved</option>
-    <option value='additional info requested'>Request More Information</option>
-</select>
-<input id='approve' type='submit' onclick='updateRequest()'>
 
+    <h1>Development Resource Page</h1>
+    
+    <!-- Div to call when print details to page -->
+    <div class='container' id='details'></div>
+
+
+    <br/><br/><br/>
+    <!-- When a request has been given a grade by the employee, there should automatically generate a notice
+    to the benco that, if the grade is passing, they should be reimbursed-->
+    <div id='hidden' visibility='hidden'>
+    <label for='approval'>FOR DEPT HEAD:</label>
+    <select id='approval' value='selectOne'>
+        <option value='selectOne'>-- Select One --</option>
+        <option value='dept head approved'>Approved</option>
+        <option value='additional info requested'>Request More Information</option>
+    </select>
+    <input id='approve' type='submit' onclick='updateRequest()'>
+    </div>
+
+    <div id='grade'>
+        <label for='gradeSubmit'></label>
+        <select id='grades' value='selectOne'>
+            <option value='selectOne'>-- Select One --</option>
+            <option value='1'>A</option>
+            <option value='2'>B</option>
+            <option value='3'>C</option>
+            <option value='4'>D</option>
+            <option value='5'>F</option>
+            <option value='6'>pass</option>
+            <option value='7'>fail</ption>
+            <option value='8'>presentation - pass</option>
+            <option value='9'>presentation - fail</option>
+        </select>
+        <input id='approve' type='submit' onclick='submitGrade()'>
+    </div>
 </body>
 <script>
 
     function loadSession() {
+
+        // add approve/more info button if dept head or benco
+        let check = new XMLHttpRequest();
+
+        check.open("GET", "http://localhost:8080/Project-1-TRMS/session.do", true);
+
+        check.send();
+
+        check.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                let sessionObj = JSON.parse(this.responseText);
+                console.log(sessionObj);
+
+                // check type of employee
+                if (sessionObj.lastName.toLowerCase() == 'departmenthead') {
+                    // make buttons visible
+                    document.getElementById('hidden').setAttribute('visibility', 'visible');
+                }
+                
+                else if (sessionObj.firstName.toLowerCase() == 'benco') {
+                    document.getElementById('hidden').setAttribute('visibility', 'visible');
+                }
+
+                else {
+                    document.getElementById('hidden').setAttribute('visibility', 'hidden');
+                }
+
+            }
+        }
 
         // get session devres info
         let xhttp = new XMLHttpRequest();
@@ -64,19 +154,27 @@ to the benco that, if the grade is passing, they should be reimbursed-->
         
         // heading for each detail
         let headers = ['Reource ID', 'Start Date', 'Time', 'Location', 'Cost', 'Type', 'Description', 'Justification']
-        for (head in header) {
-            let dhead = document.createElement('h3').innerHTML = header[head];
+        for (head in headers) {
+            let dhead = document.createElement('p');
+            dhead.setAttribute('class','h3');
             dhead.setAttribute('id', `${head}`);
+            dhead.innerHTML = headers[head];
             detailsDiv.append(dhead)
         }
         // for now just make paragraphs to make sure it works
+        let i = 0;
+
         for (thing in parsedResponse) {
             // inner html for info
             let deats = document.createElement('p');
+            deats.setAttribute('class', 'h5');
             deats.innerHTML = `${parsedResponse[thing]}`;
             
+            console.log(`${thing}`)
             // add to appropriate header
-            let sec = document.getElementById('')
+            let sec = document.getElementById(`${i}`);
+            sec.append(deats);
+            i += 1;
         }
 
     }
@@ -125,5 +223,16 @@ to the benco that, if the grade is passing, they should be reimbursed-->
         
     }
 
+    function submitGrade() {
+
+        // get input
+        let grade = document.getElementById('grades').value;
+        
+
+    }
+
+    function goHome() {
+        window.location.href="http://localhost:8080/Project-1-TRMS/html/home.html";
+    }
 </script>
 </html>
