@@ -20,6 +20,8 @@ public interface DevResController {
 	
 	public void updateDevelopmentResource(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
+	public boolean updateDevelopmentResourceGrade(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	
 	public void deleteDevelopmentResource(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
 

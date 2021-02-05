@@ -15,6 +15,8 @@ import dev.felleman.controllers.DevResController;
 import dev.felleman.controllers.DevResControllerImpl;
 import dev.felleman.controllers.EmployeeController;
 import dev.felleman.controllers.EmployeeControllerImpl;
+import dev.felleman.controllers.GradeRefController;
+import dev.felleman.controllers.GradeRefControllerImpl;
 import dev.felleman.controllers.ReimbursementController;
 import dev.felleman.controllers.ReimbursementControllerImpl;
 import dev.felleman.controllers.RequestController;
@@ -40,6 +42,7 @@ public class RequestManager {
 	public DeptController dc = new DeptControllerImpl();
 	public DevResController drs = new DevResControllerImpl();
 	public ReimbursementController rbs = new ReimbursementControllerImpl();
+	public GradeRefController grc = new GradeRefControllerImpl();
 	
 	public void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
@@ -206,6 +209,16 @@ public class RequestManager {
 		case "/Project-1-TRMS/updateStatus.do": {
 			Request r = (Request) session.getAttribute("request"); // I didn't save the request info - I saved the dev res info
 			rc.updateRequest(request, response, r);
+			break;
+		}
+		
+		case "/Project-1-TRMS/getGrade.do": {
+			grc.getGradeRefByGrade(request, response);
+			break;
+		}
+		
+		case "/Project-1-TRMS/updateDevResGrade.do": {
+			drs.updateDevelopmentResourceGrade(request, response);
 			break;
 		}
 		

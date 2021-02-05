@@ -34,6 +34,10 @@ public class DevResServicesImpl implements DevResServices {
 	public boolean updateDevelopmentResource(DevelopmentResource r) {
 		return drr.updateDevelopmentResource(r);
 	}
+	@Override
+	public boolean updateDevelopmentResourceGrade(DevelopmentResource r) {
+		return drr.updateDevelopmentResourceGrade(r);
+	}
 
 	@Override
 	public boolean deleteDevelopmentResource(DevelopmentResource r) {

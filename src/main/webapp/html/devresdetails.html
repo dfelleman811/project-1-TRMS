@@ -45,11 +45,7 @@
         </div>
       </nav>
 
-     <!-- Log Out Button-->
-     <ul id='logout' onclick='logout()'><li>Log Out</li></ul>
-
-
-
+<br/><br/>
     <h1>Development Resource Page</h1>
     
     <!-- Div to call when print details to page -->
@@ -230,6 +226,54 @@
 
         // get input
         let grade = document.getElementById('grades').value;
+
+        // send request to get ID
+        let xhttp = new XMLHttpRequest();
+
+        xhttp.open("POST", "http://localhost:8080/Project-1-TRMS/getGrade.do", true);
+
+        xhttp.send(JSON.stringify(grade));
+
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+
+                // save grade int
+                let gid = JSON.parse(this.responseText);
+                console.log(gid);
+
+                // get devres from session
+                let devRes = new XMLHttpRequest();
+                devRes.open("GET", "http://localhost:8080/Project-1-TRMS/resSession.do", true);
+                devRes.send();
+                devRes.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    //save id into variable
+                    let dr = JSON.parse(this.responseText);
+                    let drid = dr.resourceId;
+                    console.log(drid);
+
+                    // save to object
+                    let resObj = {
+                        resourceId: drid,
+                        finalGrade: gid
+                    }
+
+                    // and send update to devres with 
+
+                    let update = new XMLHttpRequest();
+                    update.open("POST", "http://localhost:8080/Project-1-TRMS/updateDevResGrade.do", true);
+                    update.send(JSON.stringify(resObj));
+                    update.onreadystatechange = function() {
+                        if (this.readyState ==4 && this.status == 200) {
+                            console.log('grade submitted')
+                        }
+                    }
+                }
+                }
+
+            }
+        }
         
 
     }

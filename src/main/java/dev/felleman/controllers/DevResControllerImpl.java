@@ -79,6 +79,23 @@ public class DevResControllerImpl implements DevResController {
 		response.getWriter().append(gson.toJson(dr));
 
 	}
+	
+	public boolean updateDevelopmentResourceGrade(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		DevelopmentResource dr = gson.fromJson(request.getReader(), DevelopmentResource.class);
+		int resourceId = dr.getResourceId();
+		int finalGrade = dr.getFinalGrade();
+		
+		DevelopmentResource dR = drs.getResource(resourceId);
+		
+		dR.setFinalGrade(finalGrade);
+		
+		drs.updateDevelopmentResource(dR);
+		
+		response.getWriter().append(gson.toJson(dR));
+		
+		return true;
+	}
 
 	@Override
 	public void deleteDevelopmentResource(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -88,5 +105,6 @@ public class DevResControllerImpl implements DevResController {
 		
 		response.getWriter().append("Development Resource Deleted");
 	}
+
 
 }

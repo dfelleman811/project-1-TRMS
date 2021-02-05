@@ -18,4 +18,6 @@ public interface DevResRepo {
 	
 	public boolean deleteDevelopmentResource(DevelopmentResource r);
 
+	boolean updateDevelopmentResourceGrade(DevelopmentResource r);
+
 }

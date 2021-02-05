@@ -162,7 +162,7 @@ public class DevResRepoImpl implements DevResRepo {
 		
 		try {
 			
-			String sql = "update development_resources set start_date = ?, resource_time = ?, resource_location = ?, resource_cost = ?, grading_format_id = ?, res_type = ?, res_description = ?, justification = ? where resource_id = ?";
+			String sql = "update development_resources set start_date = ?, resource_time = ?, resource_location = ?, resource_cost = ?, grading_format = ?, res_type = ?, res_description = ?, justification = ?, final_grade = ? where resource_id = ?";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
@@ -174,6 +174,31 @@ public class DevResRepoImpl implements DevResRepo {
 			ps.setString(6, r.getResourceType());
 			ps.setString(7, r.getResourceDescription());
 			ps.setString(8, r.getResourceJustification());
+			ps.setString(9, Integer.toString(r.getFinalGrade()));
+			ps.setString(10, Integer.toString(r.getResourceId()));
+			
+			boolean success = ps.execute();
+			
+			return success;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean updateDevelopmentResourceGrade(DevelopmentResource r) {
+		
+		try {
+			
+			String sql = "update development_resources set final_grade = ? where resource_id = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, Integer.toString(r.getFinalGrade()));
+			ps.setString(2, Integer.toString(r.getResourceId()));
+			
 			
 			boolean success = ps.execute();
 			

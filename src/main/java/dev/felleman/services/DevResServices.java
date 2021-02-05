@@ -16,6 +16,8 @@ public DevelopmentResource getResource(int rId);
 	
 	public boolean updateDevelopmentResource(DevelopmentResource r);
 	
+	public boolean updateDevelopmentResourceGrade(DevelopmentResource r);
+	
 	public boolean deleteDevelopmentResource(DevelopmentResource r);
 
 }

@@ -13,6 +13,7 @@ public class DevelopmentResource {
 	private String resourceType;
 	private String resourceDescription;
 	private String resourceJustification;
+	private int finalGrade;
 	// not sure what to do about attachments
 
 	public DevelopmentResource() {
@@ -118,6 +119,14 @@ public class DevelopmentResource {
 	public void setResourceJustification(String resourceJustification) {
 		this.resourceJustification = resourceJustification;
 	}
+	
+	public int getFinalGrade() {
+		return this.finalGrade;
+	}
+	
+	public void setFinalGrade(int finalGrade) {
+		this.finalGrade = finalGrade;
+	}
 
 	@Override
 	public String toString() {
@@ -125,7 +134,7 @@ public class DevelopmentResource {
 				+ ", resourceTime=" + this.resourceTime + ", resourceLocation=" + this.resourceLocation
 				+ ", resourceCost=" + this.resourceCost + ", gradingFormatId=" + this.gradingFormat
 				+ ", resourceType=" + this.resourceType + ", resourceDescription=" + this.resourceDescription
-				+ ", resourceJustification=" + this.resourceJustification + "]";
+				+ ", resourceJustification=" + this.resourceJustification + ", finalGrade=" + this.finalGrade + "]";
 	}
 
 }

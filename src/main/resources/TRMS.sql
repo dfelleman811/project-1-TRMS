@@ -45,6 +45,10 @@ begin
     insert into employees values (emp_id_seq.nextval, f_name, l_name, mail, pword, dept_id, sup_id, avail_reimbursement);
 end;
 
+call add_employee('basic', 'employee', 'basic.employee@example.com', 'password', 1, 1000);
+
+select emp_id_seq.nextval from dual;
+
 create or replace procedure get_sup_id(department_id number)
 is
     supervisor_id number;
@@ -88,8 +92,12 @@ create table requests (
 );
 
 alter table requests modify last_updated set default current_timestamp;
+alter table requests modify status varchar(20);
 
-alter table requests modify constraint r_status check(status in('received', 'open', 'additional info requested','dept head approved', 'benco approved', 'pending', 'closed'
+alter table requests add projected_reimbursement number(10);
+
+alter table requests drop constraint r_status;
+alter table requests add constraint r_status check (status in ('received', 'open', 'additional info requested','dept head approved', 'benco approved', 'pending', 'closed'));
 
 create or replace trigger on_req_update
 after insert or update of urgent, status 
@@ -205,6 +213,12 @@ alter table development_resources modify resource_time varchar2(20);
 alter table development_resources rename column grading_format_id to grading_format;
 alter table development_resources modify grading_format varchar2(20);
 
+alter table development_resources add final_grade number(10);
+
+alter table development_resources
+add constraint fk_devres_grade
+foreign key (final_grade) references grading_references(grade_id);
+
 alter table development_resources add constraint check_grade_type check (grading_format in ('letter grade', 'pass/fail','none/presentation'));
 
 
@@ -259,6 +273,10 @@ alter table development_resources drop constraint fk_devres_gradeform;
 select * from grading_references;
 
 select * from development_resources;
+
+    
+select * from grading_references;
+
 
 
 -- Will need a table (maybe?) for company relations- i.e. who reports to who...something like FTS but for people?
@@ -387,7 +405,7 @@ is
     res_id number := DEV_RES_ID_SEQ.currval;
 begin
     
-    insert into development_resources values (res_id, to_date(starting, 'YYYY-MM-DD'), time, location, cost, gr_format, res_type, res_description, res_just);
+    insert into development_resources values (res_id, to_date(starting, 'YYYY-MM-DD'), time, location, cost, gr_format, res_type, res_description, res_just, null);
 end;
 
 select dev_res_id_seq.currval from dual;
@@ -444,13 +462,50 @@ select requests.*, employees.supervisor_id from requests left join employees on 
 
 
 
+select * from employees order by employee_id;
+
+select * from requests order by request_id desc;
+select * from development_resources;
+
+select * from reimbursements;
+
+select req_id_seq.currval from dual;
+-- trigger for update on status change?
+
+select * from requests order by request_id desc;
+
+create or replace procedure add_request(e_id number, urgency number) 
+is
+begin
+    insert into requests values(req_id_seq.nextval, current_timestamp, urgency, 'open', e_id, dev_res_id_seq.nextval, current_timestamp, null);
+end;
+
+drop trigger devres_update;
+create or replace trigger devres_update
+after update of status
+on requests
+declare 
+    p_rem number;
+begin
+        select development_resources.resource_cost into p_rem 
+        from requests inner join development_resources 
+        on (requests.development_resource = development_resources.resource_id)
+        where development_resources.resource_id = requests.development_resource;
+
+        update requests set projected_reimbursement = p_rem;
+end;
+
+select requests.*, development_resources.resource_cost from requests inner join development_resources on (requests.development_resource = development_resources.resource_id);
+
+update requests set status = 'benco approved' where request_id = 50;
+
+select dev_res_id_seq.nextval from dual;
+
+select * from requests order by request_id desc;
 select * from employees;
+delete requests where request_id = 63;
+call add_request(45, 0);
+call add_dev_resource('2021-03-23', '9:00 AM', 'general assembly', 300, 'none/presentation', 'workshop', 'workshop', 'worth it');
 
-
-
-
-
-
-
-
-
+select * from development_resources;
+select * from grading_references;
