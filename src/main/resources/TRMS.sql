@@ -399,6 +399,7 @@ select * from grading_references;
 
 alter table development_resources drop column attachments;
 
+select * from development_resources;
 
 create or replace procedure add_dev_resource(starting varchar2, time varchar2, location varchar2, cost number, gr_format varchar2, res_type varchar2, res_description varchar2, res_just varchar2) 
 is
@@ -408,10 +409,10 @@ begin
     insert into development_resources values (res_id, to_date(starting, 'YYYY-MM-DD'), time, location, cost, gr_format, res_type, res_description, res_just, null);
 end;
 
-select dev_res_id_seq.currval from dual;
+select dev_res_id_seq.nextval from dual;
 
 
-call add_dev_resource('02-FEB-2021', '02-JAN-21 09:00:00.00', 'School', 300, 'letter grade', 'course', 'management', 'improvement');
+call add_dev_resource('02-FEB-2021', current_timestamp, 'School', 300, 'letter grade', 'course', 'management', 'improvement');
 
 insert into development_resources values (49, '2021-03-23', '9:00 AM', 'general assembly', 300, 'none/presentation', 'workshop', 'workshop', 'worth it');
 
@@ -425,6 +426,8 @@ delete employees where employee_id = 23; -- will have to think about what data w
 
 delete employees where employee_id = 21 OR employee_id = 23;
 
+select * from development_resources;
+select
 
 create table reimbursements (
 
@@ -509,3 +512,19 @@ call add_dev_resource('2021-03-23', '9:00 AM', 'general assembly', 300, 'none/pr
 
 select * from development_resources;
 select * from grading_references;
+
+
+
+
+
+select * from employees order by employee_id;
+select * from requests order by request_id desc;
+select * from development_resources order by resource_id desc;
+select * from reimbursements;
+select * from grading_references;
+
+
+
+
+
+
