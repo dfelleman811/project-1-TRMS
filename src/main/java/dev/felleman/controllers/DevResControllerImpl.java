@@ -12,6 +12,13 @@ import dev.felleman.models.DevelopmentResource;
 import dev.felleman.services.DevResServices;
 import dev.felleman.services.DevResServicesImpl;
 
+/**
+ * Implements the DevResController Interface
+ * 
+ * This Controller class is used to call the Service Layer to retrieve, add, update, or delete Development Resources from the Database.
+ * @author DanielFelleman
+ *
+ */
 public class DevResControllerImpl implements DevResController {
 	
 	public DevResServices drs = new DevResServicesImpl();

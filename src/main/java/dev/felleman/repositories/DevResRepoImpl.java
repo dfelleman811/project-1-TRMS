@@ -13,6 +13,15 @@ import dev.felleman.models.DevelopmentResource;
 import dev.felleman.util.JDBCConnection;
 import oracle.sql.DATE;
 
+/**
+ * Implements the DevResRepo Interface.
+ * 
+ * This Repository Implementation performs SQL queries using PreparedStatements and CallableStatements.
+ * With the JDBC Connection Object, the queries are sent and received to/from the Database in order to add, create, update or delete Development Resources from the Database.
+ * 
+ * @author DanielFelleman
+ *
+ */
 public class DevResRepoImpl implements DevResRepo {
 	
 	public Connection conn = JDBCConnection.getConnection();

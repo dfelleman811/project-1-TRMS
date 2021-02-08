@@ -1,5 +1,11 @@
 package dev.felleman.models;
 
+/**
+ * This Model Class represents a Grading Reference in the Database.
+ * 
+ * @author DanielFelleman
+ *
+ */
 public class GradingReference {
 
 	private int gradeId;

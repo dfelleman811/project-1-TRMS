@@ -17,6 +17,14 @@ import dev.felleman.models.Employee;
 import dev.felleman.services.EmployeeServices;
 import dev.felleman.services.EmployeeServicesImpl;
 
+
+/**
+ * Implements the EmployeeController Interface.
+ * 
+ * This Controller class is used to call the Service Layer to retrieve, add, update, or delete Employees from the Database.
+ * @author DanielFelleman
+ *
+ */
 public class EmployeeControllerImpl implements EmployeeController {
 
 	private EmployeeServices es = new EmployeeServicesImpl();

@@ -12,6 +12,13 @@ import dev.felleman.models.Department;
 import dev.felleman.services.DepartmentServices;
 import dev.felleman.services.DepartmentServicesImpl;
 
+/**
+ * Implements the DeptController Interface
+ * 
+ * This Controller class is used to call the Service Layer in order to retrieve, add, update, or delete Departments from the Database.
+ * @author DanielFelleman
+ *
+ */
 public class DeptControllerImpl implements DeptController {
 	
 	public DepartmentServices ds = new DepartmentServicesImpl();

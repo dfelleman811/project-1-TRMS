@@ -2,6 +2,13 @@ package dev.felleman.models;
 
 import java.sql.Date;
 
+/**
+ * This Model Class represents a Development Resource Entity in the Database.
+ * 
+ * 
+ * @author DanielFelleman
+ *
+ */
 public class DevelopmentResource {
 
 	private int resourceId;

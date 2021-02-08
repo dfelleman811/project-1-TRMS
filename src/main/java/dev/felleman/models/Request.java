@@ -2,6 +2,11 @@ package dev.felleman.models;
 
 import java.sql.Date;
 
+/**
+ * This Model Class represents a Reimbursement Request in the Database.
+ * @author DanielFelleman
+ *
+ */
 public class Request {
 
 	private int requestId;

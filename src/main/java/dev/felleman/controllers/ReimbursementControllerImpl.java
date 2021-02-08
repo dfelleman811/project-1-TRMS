@@ -13,6 +13,13 @@ import dev.felleman.models.Reimbursement;
 import dev.felleman.services.ReimbursementServices;
 import dev.felleman.services.ReimbursementServicesImpl;
 
+/**
+ * Implements the ReimbursementController Interface.
+ * 
+ * This Controller Class is used to call the Service Layer in order to retrieve, add, update, or delete Reimbursements from the Database.
+ * @author DanielFelleman
+ *
+ */
 public class ReimbursementControllerImpl implements ReimbursementController {
 	
 	public Gson gson = new Gson();

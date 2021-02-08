@@ -10,6 +10,16 @@ import java.util.List;
 import dev.felleman.models.GradingReference;
 import dev.felleman.util.JDBCConnection;
 
+/**
+ * Implements the GradingRefRepo Interface.
+ * 
+ * This Repository Implementation performs SQL queries using PreparedStatements and CallableStatements.
+ * With the JDBC Connection Object, the queries are sent and received to/from the Database in order to retrieve Grading References from the Database.
+ * To add, update, or delete - implementations need to be coded.
+ * 
+ * @author DanielFelleman
+ *
+ */
 public class GradingRefRepoImpl implements GradingRefRepo {
 	
 	Connection conn = JDBCConnection.getConnection();

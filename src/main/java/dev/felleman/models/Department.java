@@ -1,5 +1,12 @@
 package dev.felleman.models;
 
+/**
+ * This Model Class represents a Department Entity in the Database. 
+ * 
+ * 
+ * @author DanielFelleman
+ *
+ */
 public class Department {
 
 	private int departmentId;

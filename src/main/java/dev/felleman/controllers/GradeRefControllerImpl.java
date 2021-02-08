@@ -11,6 +11,16 @@ import dev.felleman.models.GradingReference;
 import dev.felleman.services.GradeRefServices;
 import dev.felleman.services.GradeRefServicesImpl;
 
+
+/**
+ * Implements the GradeRefController Interface.
+ * 
+ * This Controller Class is used to call the Service Layer in order to retrieve Grading References from the Database.
+ * In order to add, update, or delete Grading References from the Database, you will need to implement those methods. 
+ * 
+ * @author DanielFelleman
+ *
+ */
 public class GradeRefControllerImpl implements GradeRefController {
 	
 	public GradeRefServices grs = new GradeRefServicesImpl();

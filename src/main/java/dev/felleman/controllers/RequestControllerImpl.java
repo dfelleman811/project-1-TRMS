@@ -15,6 +15,13 @@ import dev.felleman.models.Request;
 import dev.felleman.services.RequestServices;
 import dev.felleman.services.RequestServicesImpl;
 
+/**
+ * Implements the RequestController Interface. 
+ * 
+ * This Controller Class is used to call the Service Layer in order to retrieve, add, update, or delete a Reimbursement Request from the Database.
+ * @author DanielFelleman
+ *
+ */
 public class RequestControllerImpl implements RequestController {
 	
 	private RequestServices rs = new RequestServicesImpl();

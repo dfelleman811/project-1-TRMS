@@ -11,6 +11,15 @@ import java.util.List;
 import dev.felleman.models.Employee;
 import dev.felleman.util.JDBCConnection;
 
+/**
+ * Implements the EmployeeRepository Interface.
+ * 
+ * This Repository Implementation performs SQL queries using PreparedStatements and CallableStatements.
+ * With the JDBC Connection Object, the queries are sent and received to/from the Database in order to add, create, update or delete Employees from the Database.
+ * 
+ * @author DanielFelleman
+ *
+ */
 public class EmployeeRepositoryImpl implements EmployeeRepository {
 
 	public static Connection conn = JDBCConnection.getConnection();

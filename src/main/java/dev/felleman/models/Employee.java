@@ -1,5 +1,10 @@
 package dev.felleman.models;
 
+/**
+ * This Model Class represents an Employee Entity in the Database.
+ * @author DanielFelleman
+ *
+ */
 public class Employee {
 
 	private int employeeId;

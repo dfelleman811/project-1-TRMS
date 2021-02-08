@@ -1,5 +1,11 @@
 package dev.felleman.models;
 
+/**
+ * This Model Class represents a Reimbursement Entity in the Database.
+ * 
+ * @author DanielFelleman
+ *
+ */
 public class Reimbursement {
 	
 	private int paymentId;
