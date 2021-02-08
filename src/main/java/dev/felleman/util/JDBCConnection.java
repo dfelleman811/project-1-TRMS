@@ -5,6 +5,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
+/**
+ * This class checks for an existing Database Connection Object. If none exist, it will create a new connection.
+ * References src/main/resources/connection.properties to grab credentials to authenticate connection.
+ * 
+ * @author DanielFelleman
+ *
+ */
 public class JDBCConnection {
 
 	// Create an empty connection object

@@ -6,6 +6,13 @@ import dev.felleman.models.Employee;
 import dev.felleman.repositories.EmployeeRepository;
 import dev.felleman.repositories.EmployeeRepositoryImpl;
 
+/**
+ * Implements EmployeeServices Interface.
+ * 
+ * This Service Implementation calls the Repository Layer in order to retrieve, add, update, or delete Employees in the Database.
+ * @author DanielFelleman
+ *
+ */
 public class EmployeeServicesImpl implements EmployeeServices {
 
 	private EmployeeRepository er = new EmployeeRepositoryImpl();

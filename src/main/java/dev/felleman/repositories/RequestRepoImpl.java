@@ -12,6 +12,15 @@ import dev.felleman.models.Request;
 import dev.felleman.util.JDBCConnection;
 import oracle.sql.DATE;
 
+/**
+ * Implements RequestRepo Interface.
+ * 
+ * This Repository Implementation performs SQL queries using PreparedStatements and CallableStatements.
+ * With the JDBC Connection Object, the queries are sent and received to/from the Database in order to add, create, update or delete Reimbursement Requests from the Database.
+ * 
+ * @author DanielFelleman
+ *
+ */
 public class RequestRepoImpl implements RequestRepo {
 	
 	public Connection conn = JDBCConnection.getConnection();

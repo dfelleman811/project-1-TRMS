@@ -6,6 +6,13 @@ import dev.felleman.models.Reimbursement;
 import dev.felleman.repositories.ReimbursementRepo;
 import dev.felleman.repositories.ReimbursementRepoImpl;
 
+/**
+ * Implements ReimbursementServices Interface.
+ * 
+ * This Service Implementation calls the Repository Layer in order to retrieve, add, update, or delete Reimbursements in the Database.
+ * @author DanielFelleman
+ *
+ */
 public class ReimbursementServicesImpl implements ReimbursementServices {
 	
 	public ReimbursementRepo rr = new ReimbursementRepoImpl();

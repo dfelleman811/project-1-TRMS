@@ -27,8 +27,11 @@ import dev.felleman.models.Request;
 
 /**
  * This class is to manage incoming requests and reroute them to the proper
- * controller
+ * controller.
  * 
+ * Uses a switch in order to interpret URIs and send request info (and body, if any) to the appropriate controller implementation.
+ * 
+ * Also implements a HttpSession Object to track the user's session. 
  * @author DanielFelleman
  *
  */
@@ -54,9 +57,6 @@ public class RequestManager {
 		
 		//open session
 		HttpSession session = request.getSession();
-
-		
-		
 
 		// Send to appropriate controller
 		switch (uri) {
@@ -207,7 +207,7 @@ public class RequestManager {
 		}
 		
 		case "/Project-1-TRMS/updateStatus.do": {
-			Request r = (Request) session.getAttribute("request"); // I didn't save the request info - I saved the dev res info
+			Request r = (Request) session.getAttribute("request"); 
 			rc.updateRequest(request, response, r);
 			break;
 		}

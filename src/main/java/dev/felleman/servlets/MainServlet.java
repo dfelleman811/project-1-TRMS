@@ -8,6 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * This Servlet instantiates a RequestManager in order to route service requests to the appropriate controller.
+ * See dev.felleman.servlets.RequestManager for more details.
+ * @author DanielFelleman
+ *
+ */
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

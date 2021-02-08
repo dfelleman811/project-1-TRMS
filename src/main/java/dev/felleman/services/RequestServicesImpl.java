@@ -6,6 +6,13 @@ import dev.felleman.models.Request;
 import dev.felleman.repositories.RequestRepo;
 import dev.felleman.repositories.RequestRepoImpl;
 
+/**
+ * Implements RequestServices Interface.
+ * 
+ * This Service Implementation calls the Repository Layer in order to retrieve, add, update, or delete Reimbursement Requests in the Database.
+ * @author DanielFelleman
+ *
+ */
 public class RequestServicesImpl implements RequestServices {
 
 	public RequestRepo rr = new RequestRepoImpl();

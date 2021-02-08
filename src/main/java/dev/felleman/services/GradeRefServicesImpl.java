@@ -6,6 +6,13 @@ import dev.felleman.models.GradingReference;
 import dev.felleman.repositories.GradingRefRepo;
 import dev.felleman.repositories.GradingRefRepoImpl;
 
+/**
+ * Implements GradeRefServices Interface.
+ * 
+ * This Service Implementation calls the Repository Layer in order to retrieve, add, update, or delete Grading References in the Database.
+ * @author DanielFelleman
+ *
+ */
 public class GradeRefServicesImpl implements GradeRefServices {
 	
 	public GradingRefRepo grr = new GradingRefRepoImpl();

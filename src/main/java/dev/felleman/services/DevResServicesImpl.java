@@ -6,6 +6,13 @@ import dev.felleman.models.DevelopmentResource;
 import dev.felleman.repositories.DevResRepo;
 import dev.felleman.repositories.DevResRepoImpl;
 
+/**
+ * Implements DevResServices Interface.
+ * 
+ * This Service Implementation calls the Repository Layer in order to retrieve, add, update, or delete Development Resources in the Database.
+ * @author DanielFelleman
+ *
+ */
 public class DevResServicesImpl implements DevResServices {
 	
 	public DevResRepo drr = new DevResRepoImpl();

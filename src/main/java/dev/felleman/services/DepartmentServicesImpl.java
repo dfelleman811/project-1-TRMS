@@ -6,6 +6,13 @@ import dev.felleman.models.Department;
 import dev.felleman.repositories.DepartmentRepo;
 import dev.felleman.repositories.DepartmentRepoImpl;
 
+/**
+ * Implements DepartmentServices Interface.
+ * 
+ * This Service Implementation calls the Repository Layer in order to retrieve, add, update, or delete Departments in the Database.
+ * @author DanielFelleman
+ *
+ */
 public class DepartmentServicesImpl implements DepartmentServices {
 	
 	public DepartmentRepo dr = new DepartmentRepoImpl();
